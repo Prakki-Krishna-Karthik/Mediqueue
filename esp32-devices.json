@@ -1,0 +1,536 @@
+{
+  "devices": [
+    {
+      "deviceId": "ESP-DEMO-001",
+      "name": "Main Lobby Display",
+      "location": "Hospital Lobby",
+      "hospitalId": 1,
+      "apiKey": "ESP-DEMO-KEY-123456",
+      "displayMode": "queue",
+      "refreshInterval": 10,
+      "isActive": true,
+      "registeredAt": "2026-02-24T11:54:57.770Z",
+      "lastSeen": "2026-02-24T13:52:50.130Z",
+      "lastIp": "::ffff:10.53.189.37"
+    }
+  ],
+  "displaySettings": {
+    "ESP-DEMO-001": {
+      "mode": "queue",
+      "brightness": 128,
+      "contrast": 128,
+      "rotation": 0,
+      "showTime": true,
+      "showDate": true,
+      "showQueueNumber": true,
+      "showHospitalName": true,
+      "customMessage": "Welcome to City General Hospital"
+    }
+  },
+  "accessLogs": [
+    {
+      "timestamp": "2026-02-24T13:45:11.257Z",
+      "deviceId": "ESP-DEMO-001",
+      "deviceName": "Main Lobby Display",
+      "ip": "::ffff:10.53.189.37",
+      "success": true
+    },
+    {
+      "timestamp": "2026-02-24T13:45:21.328Z",
+      "deviceId": "ESP-DEMO-001",
+      "deviceName": "Main Lobby Display",
+      "ip": "::ffff:10.53.189.37",
+      "success": true
+    },
+    {
+      "timestamp": "2026-02-24T13:45:31.398Z",
+      "deviceId": "ESP-DEMO-001",
+      "deviceName": "Main Lobby Display",
+      "ip": "::ffff:10.53.189.37",
+      "success": true
+    },
+    {
+      "timestamp": "2026-02-24T13:45:41.466Z",
+      "deviceId": "ESP-DEMO-001",
+      "deviceName": "Main Lobby Display",
+      "ip": "::ffff:10.53.189.37",
+      "success": true
+    },
+    {
+      "timestamp": "2026-02-24T13:45:51.533Z",
+      "deviceId": "ESP-DEMO-001",
+      "deviceName": "Main Lobby Display",
+      "ip": "::ffff:10.53.189.37",
+      "success": true
+    },
+    {
+      "timestamp": "2026-02-24T13:46:01.603Z",
+      "deviceId": "ESP-DEMO-001",
+      "deviceName": "Main Lobby Display",
+      "ip": "::ffff:10.53.189.37",
+      "success": true
+    },
+    {
+      "timestamp": "2026-02-24T13:46:11.670Z",
+      "deviceId": "ESP-DEMO-001",
+      "deviceName": "Main Lobby Display",
+      "ip": "::ffff:10.53.189.37",
+      "success": true
+    },
+    {
+      "timestamp": "2026-02-24T13:46:21.738Z",
+      "deviceId": "ESP-DEMO-001",
+      "deviceName": "Main Lobby Display",
+      "ip": "::ffff:10.53.189.37",
+      "success": true
+    },
+    {
+      "timestamp": "2026-02-24T13:46:31.809Z",
+      "deviceId": "ESP-DEMO-001",
+      "deviceName": "Main Lobby Display",
+      "ip": "::ffff:10.53.189.37",
+      "success": true
+    },
+    {
+      "timestamp": "2026-02-24T13:46:41.875Z",
+      "deviceId": "ESP-DEMO-001",
+      "deviceName": "Main Lobby Display",
+      "ip": "::ffff:10.53.189.37",
+      "success": true
+    },
+    {
+      "timestamp": "2026-02-24T13:46:51.943Z",
+      "deviceId": "ESP-DEMO-001",
+      "deviceName": "Main Lobby Display",
+      "ip": "::ffff:10.53.189.37",
+      "success": true
+    },
+    {
+      "timestamp": "2026-02-24T13:47:02.011Z",
+      "deviceId": "ESP-DEMO-001",
+      "deviceName": "Main Lobby Display",
+      "ip": "::ffff:10.53.189.37",
+      "success": true
+    },
+    {
+      "timestamp": "2026-02-24T13:47:12.081Z",
+      "deviceId": "ESP-DEMO-001",
+      "deviceName": "Main Lobby Display",
+      "ip": "::ffff:10.53.189.37",
+      "success": true
+    },
+    {
+      "timestamp": "2026-02-24T13:47:22.144Z",
+      "deviceId": "ESP-DEMO-001",
+      "deviceName": "Main Lobby Display",
+      "ip": "::ffff:10.53.189.37",
+      "success": true
+    },
+    {
+      "timestamp": "2026-02-24T13:47:32.211Z",
+      "deviceId": "ESP-DEMO-001",
+      "deviceName": "Main Lobby Display",
+      "ip": "::ffff:10.53.189.37",
+      "success": true
+    },
+    {
+      "timestamp": "2026-02-24T13:47:42.277Z",
+      "deviceId": "ESP-DEMO-001",
+      "deviceName": "Main Lobby Display",
+      "ip": "::ffff:10.53.189.37",
+      "success": true
+    },
+    {
+      "timestamp": "2026-02-24T13:47:52.334Z",
+      "deviceId": "ESP-DEMO-001",
+      "deviceName": "Main Lobby Display",
+      "ip": "::ffff:10.53.189.37",
+      "success": true
+    },
+    {
+      "timestamp": "2026-02-24T13:48:02.402Z",
+      "deviceId": "ESP-DEMO-001",
+      "deviceName": "Main Lobby Display",
+      "ip": "::ffff:10.53.189.37",
+      "success": true
+    },
+    {
+      "timestamp": "2026-02-24T13:48:12.469Z",
+      "deviceId": "ESP-DEMO-001",
+      "deviceName": "Main Lobby Display",
+      "ip": "::ffff:10.53.189.37",
+      "success": true
+    },
+    {
+      "timestamp": "2026-02-24T13:48:22.537Z",
+      "deviceId": "ESP-DEMO-001",
+      "deviceName": "Main Lobby Display",
+      "ip": "::ffff:10.53.189.37",
+      "success": true
+    },
+    {
+      "timestamp": "2026-02-24T13:48:32.606Z",
+      "deviceId": "ESP-DEMO-001",
+      "deviceName": "Main Lobby Display",
+      "ip": "::ffff:10.53.189.37",
+      "success": true
+    },
+    {
+      "timestamp": "2026-02-24T13:48:42.679Z",
+      "deviceId": "ESP-DEMO-001",
+      "deviceName": "Main Lobby Display",
+      "ip": "::ffff:10.53.189.37",
+      "success": true
+    },
+    {
+      "timestamp": "2026-02-24T13:49:09.276Z",
+      "deviceId": "ESP-DEMO-001",
+      "deviceName": "Main Lobby Display",
+      "ip": "::ffff:10.53.189.37",
+      "success": true
+    },
+    {
+      "timestamp": "2026-02-24T13:49:14.297Z",
+      "deviceId": "ESP-DEMO-001",
+      "deviceName": "Main Lobby Display",
+      "ip": "::ffff:10.53.189.37",
+      "success": true
+    },
+    {
+      "timestamp": "2026-02-24T13:49:19.313Z",
+      "deviceId": "ESP-DEMO-001",
+      "deviceName": "Main Lobby Display",
+      "ip": "::ffff:10.53.189.37",
+      "success": true
+    },
+    {
+      "timestamp": "2026-02-24T13:49:24.332Z",
+      "deviceId": "ESP-DEMO-001",
+      "deviceName": "Main Lobby Display",
+      "ip": "::ffff:10.53.189.37",
+      "success": true
+    },
+    {
+      "timestamp": "2026-02-24T13:49:29.355Z",
+      "deviceId": "ESP-DEMO-001",
+      "deviceName": "Main Lobby Display",
+      "ip": "::ffff:10.53.189.37",
+      "success": true
+    },
+    {
+      "timestamp": "2026-02-24T13:49:34.373Z",
+      "deviceId": "ESP-DEMO-001",
+      "deviceName": "Main Lobby Display",
+      "ip": "::ffff:10.53.189.37",
+      "success": true
+    },
+    {
+      "timestamp": "2026-02-24T13:49:39.397Z",
+      "deviceId": "ESP-DEMO-001",
+      "deviceName": "Main Lobby Display",
+      "ip": "::ffff:10.53.189.37",
+      "success": true
+    },
+    {
+      "timestamp": "2026-02-24T13:49:44.416Z",
+      "deviceId": "ESP-DEMO-001",
+      "deviceName": "Main Lobby Display",
+      "ip": "::ffff:10.53.189.37",
+      "success": true
+    },
+    {
+      "timestamp": "2026-02-24T13:49:49.458Z",
+      "deviceId": "ESP-DEMO-001",
+      "deviceName": "Main Lobby Display",
+      "ip": "::ffff:10.53.189.37",
+      "success": true
+    },
+    {
+      "timestamp": "2026-02-24T13:49:54.475Z",
+      "deviceId": "ESP-DEMO-001",
+      "deviceName": "Main Lobby Display",
+      "ip": "::ffff:10.53.189.37",
+      "success": true
+    },
+    {
+      "timestamp": "2026-02-24T13:49:59.491Z",
+      "deviceId": "ESP-DEMO-001",
+      "deviceName": "Main Lobby Display",
+      "ip": "::ffff:10.53.189.37",
+      "success": true
+    },
+    {
+      "timestamp": "2026-02-24T13:50:04.503Z",
+      "deviceId": "ESP-DEMO-001",
+      "deviceName": "Main Lobby Display",
+      "ip": "::ffff:10.53.189.37",
+      "success": true
+    },
+    {
+      "timestamp": "2026-02-24T13:50:09.524Z",
+      "deviceId": "ESP-DEMO-001",
+      "deviceName": "Main Lobby Display",
+      "ip": "::ffff:10.53.189.37",
+      "success": true
+    },
+    {
+      "timestamp": "2026-02-24T13:50:14.542Z",
+      "deviceId": "ESP-DEMO-001",
+      "deviceName": "Main Lobby Display",
+      "ip": "::ffff:10.53.189.37",
+      "success": true
+    },
+    {
+      "timestamp": "2026-02-24T13:50:19.574Z",
+      "deviceId": "ESP-DEMO-001",
+      "deviceName": "Main Lobby Display",
+      "ip": "::ffff:10.53.189.37",
+      "success": true
+    },
+    {
+      "timestamp": "2026-02-24T13:50:24.600Z",
+      "deviceId": "ESP-DEMO-001",
+      "deviceName": "Main Lobby Display",
+      "ip": "::ffff:10.53.189.37",
+      "success": true
+    },
+    {
+      "timestamp": "2026-02-24T13:50:29.611Z",
+      "deviceId": "ESP-DEMO-001",
+      "deviceName": "Main Lobby Display",
+      "ip": "::ffff:10.53.189.37",
+      "success": true
+    },
+    {
+      "timestamp": "2026-02-24T13:50:34.630Z",
+      "deviceId": "ESP-DEMO-001",
+      "deviceName": "Main Lobby Display",
+      "ip": "::ffff:10.53.189.37",
+      "success": true
+    },
+    {
+      "timestamp": "2026-02-24T13:50:39.645Z",
+      "deviceId": "ESP-DEMO-001",
+      "deviceName": "Main Lobby Display",
+      "ip": "::ffff:10.53.189.37",
+      "success": true
+    },
+    {
+      "timestamp": "2026-02-24T13:50:44.660Z",
+      "deviceId": "ESP-DEMO-001",
+      "deviceName": "Main Lobby Display",
+      "ip": "::ffff:10.53.189.37",
+      "success": true
+    },
+    {
+      "timestamp": "2026-02-24T13:50:49.676Z",
+      "deviceId": "ESP-DEMO-001",
+      "deviceName": "Main Lobby Display",
+      "ip": "::ffff:10.53.189.37",
+      "success": true
+    },
+    {
+      "timestamp": "2026-02-24T13:50:54.694Z",
+      "deviceId": "ESP-DEMO-001",
+      "deviceName": "Main Lobby Display",
+      "ip": "::ffff:10.53.189.37",
+      "success": true
+    },
+    {
+      "timestamp": "2026-02-24T13:50:59.708Z",
+      "deviceId": "ESP-DEMO-001",
+      "deviceName": "Main Lobby Display",
+      "ip": "::ffff:10.53.189.37",
+      "success": true
+    },
+    {
+      "timestamp": "2026-02-24T13:51:04.723Z",
+      "deviceId": "ESP-DEMO-001",
+      "deviceName": "Main Lobby Display",
+      "ip": "::ffff:10.53.189.37",
+      "success": true
+    },
+    {
+      "timestamp": "2026-02-24T13:51:09.749Z",
+      "deviceId": "ESP-DEMO-001",
+      "deviceName": "Main Lobby Display",
+      "ip": "::ffff:10.53.189.37",
+      "success": true
+    },
+    {
+      "timestamp": "2026-02-24T13:51:14.765Z",
+      "deviceId": "ESP-DEMO-001",
+      "deviceName": "Main Lobby Display",
+      "ip": "::ffff:10.53.189.37",
+      "success": true
+    },
+    {
+      "timestamp": "2026-02-24T13:51:19.786Z",
+      "deviceId": "ESP-DEMO-001",
+      "deviceName": "Main Lobby Display",
+      "ip": "::ffff:10.53.189.37",
+      "success": true
+    },
+    {
+      "timestamp": "2026-02-24T13:51:24.801Z",
+      "deviceId": "ESP-DEMO-001",
+      "deviceName": "Main Lobby Display",
+      "ip": "::ffff:10.53.189.37",
+      "success": true
+    },
+    {
+      "timestamp": "2026-02-24T13:51:29.826Z",
+      "deviceId": "ESP-DEMO-001",
+      "deviceName": "Main Lobby Display",
+      "ip": "::ffff:10.53.189.37",
+      "success": true
+    },
+    {
+      "timestamp": "2026-02-24T13:51:34.841Z",
+      "deviceId": "ESP-DEMO-001",
+      "deviceName": "Main Lobby Display",
+      "ip": "::ffff:10.53.189.37",
+      "success": true
+    },
+    {
+      "timestamp": "2026-02-24T13:51:39.863Z",
+      "deviceId": "ESP-DEMO-001",
+      "deviceName": "Main Lobby Display",
+      "ip": "::ffff:10.53.189.37",
+      "success": true
+    },
+    {
+      "timestamp": "2026-02-24T13:51:44.883Z",
+      "deviceId": "ESP-DEMO-001",
+      "deviceName": "Main Lobby Display",
+      "ip": "::ffff:10.53.189.37",
+      "success": true
+    },
+    {
+      "timestamp": "2026-02-24T13:51:49.910Z",
+      "deviceId": "ESP-DEMO-001",
+      "deviceName": "Main Lobby Display",
+      "ip": "::ffff:10.53.189.37",
+      "success": true
+    },
+    {
+      "timestamp": "2026-02-24T13:51:54.929Z",
+      "deviceId": "ESP-DEMO-001",
+      "deviceName": "Main Lobby Display",
+      "ip": "::ffff:10.53.189.37",
+      "success": true
+    },
+    {
+      "timestamp": "2026-02-24T13:51:59.954Z",
+      "deviceId": "ESP-DEMO-001",
+      "deviceName": "Main Lobby Display",
+      "ip": "::ffff:10.53.189.37",
+      "success": true
+    },
+    {
+      "timestamp": "2026-02-24T13:52:04.969Z",
+      "deviceId": "ESP-DEMO-001",
+      "deviceName": "Main Lobby Display",
+      "ip": "::ffff:10.53.189.37",
+      "success": true
+    },
+    {
+      "timestamp": "2026-02-24T13:52:10.006Z",
+      "deviceId": "ESP-DEMO-001",
+      "deviceName": "Main Lobby Display",
+      "ip": "::ffff:10.53.189.37",
+      "success": true
+    },
+    {
+      "timestamp": "2026-02-24T13:52:15.017Z",
+      "deviceId": "ESP-DEMO-001",
+      "deviceName": "Main Lobby Display",
+      "ip": "::ffff:10.53.189.37",
+      "success": true
+    },
+    {
+      "timestamp": "2026-02-24T13:52:20.032Z",
+      "deviceId": "ESP-DEMO-001",
+      "deviceName": "Main Lobby Display",
+      "ip": "::ffff:10.53.189.37",
+      "success": true
+    },
+    {
+      "timestamp": "2026-02-24T13:52:25.047Z",
+      "deviceId": "ESP-DEMO-001",
+      "deviceName": "Main Lobby Display",
+      "ip": "::ffff:10.53.189.37",
+      "success": true
+    },
+    {
+      "timestamp": "2026-02-24T13:52:30.056Z",
+      "deviceId": "ESP-DEMO-001",
+      "deviceName": "Main Lobby Display",
+      "ip": "::ffff:10.53.189.37",
+      "success": true
+    },
+    {
+      "timestamp": "2026-02-24T13:52:35.073Z",
+      "deviceId": "ESP-DEMO-001",
+      "deviceName": "Main Lobby Display",
+      "ip": "::ffff:10.53.189.37",
+      "success": true
+    },
+    {
+      "timestamp": "2026-02-24T13:52:43.000Z",
+      "deviceId": "ESP-DEMO-001",
+      "deviceName": "Main Lobby Display",
+      "ip": "::ffff:10.53.189.37",
+      "success": true
+    },
+    {
+      "timestamp": "2026-02-24T13:52:45.110Z",
+      "deviceId": "ESP-DEMO-001",
+      "deviceName": "Main Lobby Display",
+      "ip": "::ffff:10.53.189.37",
+      "success": true
+    },
+    {
+      "timestamp": "2026-02-24T13:52:50.130Z",
+      "deviceId": "ESP-DEMO-001",
+      "deviceName": "Main Lobby Display",
+      "ip": "::ffff:10.53.189.37",
+      "success": true
+    },
+    {
+      "timestamp": "2026-02-25T17:18:26.923Z",
+      "apiKey": "ESP-4AD97A1DE08254235E5E04DDF07BF9DF",
+      "ip": "::ffff:10.53.189.37",
+      "success": false,
+      "reason": "Invalid API key"
+    },
+    {
+      "timestamp": "2026-02-25T17:19:26.936Z",
+      "apiKey": "ESP-4AD97A1DE08254235E5E04DDF07BF9DF",
+      "ip": "::ffff:10.53.189.37",
+      "success": false,
+      "reason": "Invalid API key"
+    },
+    {
+      "timestamp": "2026-02-25T17:27:35.163Z",
+      "apiKey": "ESP-4AD97A1DE08254235E5E04DDF07BF9DF",
+      "ip": "::ffff:10.53.189.37",
+      "success": false,
+      "reason": "Invalid API key"
+    },
+    {
+      "timestamp": "2026-02-25T17:30:58.362Z",
+      "apiKey": "ESP-4AD97A1DE08254235E5E04DDF07BF9DF",
+      "ip": "::ffff:10.53.189.37",
+      "success": false,
+      "reason": "Invalid API key"
+    },
+    {
+      "timestamp": "2026-02-25T17:33:53.017Z",
+      "apiKey": "ESP-4AD97A1DE08254235E5E04DDF07BF9DF",
+      "ip": "::ffff:10.53.189.37",
+      "success": false,
+      "reason": "Invalid API key"
+    }
+  ]
+}

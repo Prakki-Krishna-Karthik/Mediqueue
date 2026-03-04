@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MediQueue Chennai - Admin Login | ESP32 Device Manager</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        .login-container {
+            background: linear-gradient(135deg, #1e40af 0%, #7e22ce 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .login-container::before {
+            content: '';
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            background: repeating-linear-gradient(
+                45deg,
+                transparent,
+                transparent 50px,
+                rgba(255, 255, 255, 0.03) 50px,
+                rgba(255, 255, 255, 0.03) 100px
+            );
+            animation: moveBackground 20s linear infinite;
+        }
+        @keyframes moveBackground {
+            0% { transform: translate(-10%, -10%) rotate(0deg); }
+            100% { transform: translate(-30%, -30%) rotate(5deg); }
+        }
+        .login-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            width: 100%;
+            max-width: 450px;
+            position: relative;
+            z-index: 10;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transform: translateY(0);
+            transition: transform 0.3s ease;
+        }
+        .login-card:hover {
+            transform: translateY(-5px);
+        }
+        .chennai-badge {
+            background: linear-gradient(135deg, #f97316 0%, #dc2626 100%);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            display: inline-block;
+        }
+        .feature-badge {
+            background: #f3f4f6;
+            border-radius: 12px;
+            padding: 8px 12px;
+            font-size: 0.8rem;
+            transition: all 0.3s;
+        }
+        .feature-badge:hover {
+            background: #e5e7eb;
+            transform: scale(1.02);
+        }
+        .esp32-status {
+            background: linear-gradient(135deg, #059669 0%, #047857 100%);
+            color: white;
+            border-radius: 8px;
+            padding: 4px 8px;
+            font-size: 0.7rem;
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.8; }
+            100% { opacity: 1; }
+        }
+        .input-field {
+            border: 2px solid #e5e7eb;
+            transition: all 0.3s;
+        }
+        .input-field:focus {
+            border-color: #7e22ce;
+            box-shadow: 0 0 0 3px rgba(126, 34, 206, 0.1);
+        }
+        .login-stats {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 12px;
+            margin-top: 16px;
+            color: white;
+        }
+        .floating-icon {
+            position: absolute;
+            font-size: 3rem;
+            color: rgba(255, 255, 255, 0.1);
+            z-index: 1;
+            animation: float 6s ease-in-out infinite;
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(5deg); }
+        }
+        .icon-1 { top: 10%; left: 5%; animation-delay: 0s; }
+        .icon-2 { top: 70%; right: 5%; animation-delay: 2s; }
+        .icon-3 { bottom: 10%; left: 20%; animation-delay: 4s; }
+    </style>
+</head>
+<body class="login-container">
+    <!-- Floating Background Icons -->
+    <i class="fas fa-microchip floating-icon icon-1"></i>
+    <i class="fas fa-heartbeat floating-icon icon-2"></i>
+    <i class="fas fa-robot floating-icon icon-3"></i>
+
+    <div class="login-card p-8 mx-4 relative overflow-hidden">
+        <!-- Decorative Top Bar -->
+        <div class="absolute top-0 left-0 right-0 h-2 bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600"></div>
+        
+        <!-- Header with Chennai Badge -->
+        <div class="text-center mb-6">
+            <div class="flex justify-center mb-4">
+                <div class="bg-gradient-to-r from-blue-600 to-purple-600 p-4 rounded-full shadow-lg">
+                    <i class="fas fa-hospital-user text-4xl text-white"></i>
+                </div>
+            </div>
+            
+            <h1 class="text-3xl font-bold text-gray-800 mb-2">MediQueue Chennai</h1>
+            <div class="flex justify-center space-x-2 mb-3">
+                <span class="chennai-badge"><i class="fas fa-map-marker-alt mr-1"></i>Chennai Medical Network</span>
+                <span class="esp32-status"><i class="fas fa-microchip mr-1"></i>ESP32 Ready</span>
+            </div>
+            <p class="text-gray-600 text-sm">Healthcare Administration with IoT Integration</p>
+        </div>
+
+        <!-- Quick Stats -->
+        <div class="grid grid-cols-3 gap-2 mb-6">
+            <div class="feature-badge text-center">
+                <i class="fas fa-hospital text-blue-600 mb-1"></i>
+                <div class="font-semibold text-sm">8 Hospitals</div>
+                <div class="text-xs text-gray-500">Chennai</div>
+            </div>
+            <div class="feature-badge text-center">
+                <i class="fas fa-microchip text-purple-600 mb-1"></i>
+                <div class="font-semibold text-sm">12+ Devices</div>
+                <div class="text-xs text-gray-500">ESP32 Active</div>
+            </div>
+            <div class="feature-badge text-center">
+                <i class="fas fa-robot text-green-600 mb-1"></i>
+                <div class="font-semibold text-sm">AI Active</div>
+                <div class="text-xs text-gray-500">Symptom Analysis</div>
+            </div>
+        </div>
+
+        <!-- Login Form -->
+        <form id="loginForm" class="space-y-5">
+            <div>
+                <label class="block text-gray-700 mb-2 font-medium">
+                    <i class="fas fa-user text-gray-400 mr-2"></i>Username
+                </label>
+                <input type="text" id="username" value="admin" 
+                       class="w-full p-3 input-field rounded-md focus:outline-none" 
+                       placeholder="Enter your username" required>
+            </div>
+            
+            <div>
+                <label class="block text-gray-700 mb-2 font-medium">
+                    <i class="fas fa-lock text-gray-400 mr-2"></i>Password
+                </label>
+                <input type="password" id="password" value="admin123" 
+                       class="w-full p-3 input-field rounded-md focus:outline-none" 
+                       placeholder="Enter your password" required>
+            </div>
+
+            <!-- ESP32 Security Notice -->
+            <div class="bg-blue-50 p-3 rounded-lg border border-blue-200">
+                <div class="flex items-start">
+                    <i class="fas fa-shield-alt text-blue-600 mt-1 mr-3"></i>
+                    <div>
+                        <p class="text-sm font-semibold text-blue-800">ESP32 Device Manager Access</p>
+                        <p class="text-xs text-blue-600">Manage patient devices, view emergency alerts, and monitor health readings</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Remember Me & Forgot Password -->
+            <div class="flex items-center justify-between text-sm">
+                <label class="flex items-center">
+                    <input type="checkbox" class="mr-2 rounded border-gray-300 text-blue-600">
+                    <span class="text-gray-600">Remember me</span>
+                </label>
+                <a href="#" class="text-blue-600 hover:text-blue-800">Forgot password?</a>
+            </div>
+
+            <button type="submit" id="loginBtn" 
+                    class="w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white p-3 rounded-md font-semibold hover:from-blue-700 hover:to-purple-700 transition transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-opacity-50">
+                <i class="fas fa-sign-in-alt mr-2"></i>Access Admin Dashboard
+            </button>
+        </form>
+
+        <!-- Default Credentials Card -->
+        <div class="mt-6 p-4 bg-gradient-to-r from-gray-50 to-gray-100 rounded-lg border border-gray-200">
+            <div class="flex items-center justify-between mb-2">
+                <span class="text-sm font-semibold text-gray-700">Demo Access</span>
+                <span class="text-xs bg-yellow-200 text-yellow-800 px-2 py-1 rounded-full">Testing Only</span>
+            </div>
+            <div class="grid grid-cols-2 gap-2 text-sm">
+                <div>
+                    <span class="text-gray-500">Username:</span>
+                    <span class="font-mono font-bold text-blue-600 ml-1">admin</span>
+                </div>
+                <div>
+                    <span class="text-gray-500">Password:</span>
+                    <span class="font-mono font-bold text-purple-600 ml-1">admin123</span>
+                </div>
+            </div>
+            <div class="mt-2 text-xs text-gray-500 flex items-center">
+                <i class="fas fa-info-circle mr-1"></i>
+                Has full access to ESP32 device management
+            </div>
+        </div>
+
+        <!-- System Status -->
+        <div class="mt-6 flex items-center justify-between text-xs text-gray-500 border-t pt-4">
+            <div class="flex items-center">
+                <span class="w-2 h-2 bg-green-500 rounded-full mr-2 animate-pulse"></span>
+                System Online
+            </div>
+            <div class="flex items-center space-x-3">
+                <span><i class="fas fa-microchip mr-1"></i>12 devices</span>
+                <span><i class="fas fa-robot mr-1"></i>AI Ready</span>
+            </div>
+        </div>
+
+        <!-- Back Link -->
+        <div class="mt-4 text-center">
+            <a href="/" class="text-sm text-gray-500 hover:text-blue-600 transition">
+                <i class="fas fa-arrow-left mr-2"></i>Return to Patient Booking
+            </a>
+        </div>
+
+        <!-- ESP32 Connection Status (Live) -->
+        <div id="esp32LiveStatus" class="mt-3 text-center">
+            <!-- Will be populated by JavaScript -->
+        </div>
+    </div>
+
+    <!-- Login Error Modal -->
+    <div id="errorModal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+        <div class="bg-white rounded-lg p-6 max-w-sm mx-4">
+            <div class="text-center">
+                <div class="bg-red-100 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
+                    <i class="fas fa-exclamation-triangle text-3xl text-red-600"></i>
+                </div>
+                <h3 class="text-xl font-bold text-gray-800 mb-2">Login Failed</h3>
+                <p id="errorMessage" class="text-gray-600 mb-4">Invalid username or password</p>
+                <button onclick="closeErrorModal()" class="bg-red-600 text-white px-6 py-2 rounded-md hover:bg-red-700">
+                    Try Again
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // DOM Elements
+        const loginForm = document.getElementById('loginForm');
+        const loginBtn = document.getElementById('loginBtn');
+        const errorModal = document.getElementById('errorModal');
+        const errorMessage = document.getElementById('errorMessage');
+
+        // Check if already logged in
+        async function checkAuth() {
+            try {
+                const response = await fetch('/api/auth-status');
+                const data = await response.json();
+                
+                if (data.isAuthenticated) {
+                    window.location.href = '/admin';
+                }
+            } catch (error) {
+                console.log('Auth check failed, staying on login page');
+            }
+        }
+
+        // Show ESP32 live status
+        async function updateESP32Status() {
+            try {
+                const response = await fetch('/api/esp32/devices', {
+                    headers: {
+                        'x-session-token': getCookie('sessionToken') || ''
+                    }
+                });
+                const data = await response.json();
+                
+                const statusDiv = document.getElementById('esp32LiveStatus');
+                if (data.success) {
+                    const onlineDevices = data.devices.filter(d => d.lastSeen && (new Date() - new Date(d.lastSeen)) < 300000).length;
+                    statusDiv.innerHTML = `
+                        <span class="text-xs ${onlineDevices > 0 ? 'text-green-600' : 'text-gray-400'}">
+                            <i class="fas fa-circle mr-1 ${onlineDevices > 0 ? 'text-green-500 animate-pulse' : ''}"></i>
+                            ${onlineDevices} ESP32 devices online
+                        </span>
+                    `;
+                }
+            } catch (error) {
+                // Ignore - just don't show status
+            }
+        }
+
+        // Helper to get cookie
+        function getCookie(name) {
+            const value = `; ${document.cookie}`;
+            const parts = value.split(`; ${name}=`);
+            if (parts.length === 2) return parts.pop().split(';').shift();
+        }
+
+        // Close error modal
+        window.closeErrorModal = function() {
+            errorModal.classList.add('hidden');
+        }
+
+        // Handle login form submission
+        loginForm.addEventListener('submit', async function(e) {
+            e.preventDefault();
+
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+
+            // Show loading state
+            loginBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Authenticating...';
+            loginBtn.disabled = true;
+
+            try {
+                const response = await fetch('/api/admin-login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ username, password })
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    // Show success message
+                    loginBtn.innerHTML = '<i class="fas fa-check mr-2"></i>Success! Redirecting...';
+                    
+                    // Store session info
+                    if (data.sessionToken) {
+                        document.cookie = `sessionToken=${data.sessionToken}; path=/; max-age=86400`;
+                    }
+                    
+                    // Redirect to admin panel
+                    setTimeout(() => {
+                        window.location.href = data.redirect || '/admin';
+                    }, 500);
+                } else {
+                    // Show error modal
+                    errorMessage.textContent = data.error || 'Invalid username or password';
+                    errorModal.classList.remove('hidden');
+                    
+                    // Reset button
+                    loginBtn.innerHTML = '<i class="fas fa-sign-in-alt mr-2"></i>Access Admin Dashboard';
+                    loginBtn.disabled = false;
+                }
+            } catch (error) {
+                // Show network error
+                errorMessage.textContent = 'Network error. Please check your connection.';
+                errorModal.classList.remove('hidden');
+                
+                // Reset button
+                loginBtn.innerHTML = '<i class="fas fa-sign-in-alt mr-2"></i>Access Admin Dashboard';
+                loginBtn.disabled = false;
+            }
+        });
+
+        // Handle Enter key press
+        document.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                loginForm.dispatchEvent(new Event('submit'));
+            }
+        });
+
+        // Auto-fill demo credentials (optional)
+        function fillDemoCredentials() {
+            document.getElementById('username').value = 'admin';
+            document.getElementById('password').value = 'admin123';
+        }
+
+        // Check authentication on load
+        checkAuth();
+        
+        // Update ESP32 status every 30 seconds
+        updateESP32Status();
+        setInterval(updateESP32Status, 30000);
+
+        // Optional: Auto-fill for demo (comment out in production)
+        fillDemoCredentials();
+    </script>
+</body>
+</html>

@@ -1,0 +1,447 @@
+{
+  "alerts": [
+    {
+      "id": "EMG-AD5264CA",
+      "type": "emergency_button",
+      "deviceId": "DEV-226A3957",
+      "patientToken": "S-8-001",
+      "patientName": "saketh",
+      "mobileNumber": "1231255466",
+      "fingerprintId": "1",
+      "location": {
+        "lat": 13.0827,
+        "lng": 80.2707
+      },
+      "timestamp": "2026-02-25T17:42:19.084Z",
+      "status": "resolved",
+      "priority": "critical",
+      "hospital": {
+        "id": 8,
+        "name": "Chettinad Health City",
+        "address": "Rajiv Gandhi Salai, Kelambakkam, Chennai - 603103",
+        "contact": "+91-44-4741-1000"
+      },
+      "resolvedAt": "2026-02-25T17:50:27.054Z",
+      "resolvedBy": "admin"
+    },
+    {
+      "id": "EMG-C982397B",
+      "type": "emergency_button",
+      "deviceId": "DEV-226A3957",
+      "patientToken": "S-8-001",
+      "patientName": "saketh",
+      "mobileNumber": "1231255466",
+      "fingerprintId": "1",
+      "location": {
+        "lat": 13.0827,
+        "lng": 80.2707
+      },
+      "timestamp": "2026-02-25T17:53:14.294Z",
+      "status": "resolved",
+      "priority": "critical",
+      "hospital": {
+        "id": 8,
+        "name": "Chettinad Health City",
+        "address": "Rajiv Gandhi Salai, Kelambakkam, Chennai - 603103",
+        "contact": "+91-44-4741-1000"
+      },
+      "resolvedAt": "2026-02-25T18:10:30.955Z",
+      "resolvedBy": "admin"
+    },
+    {
+      "id": "EMG-B942F4F7",
+      "type": "emergency_button",
+      "deviceId": "DEV-226A3957",
+      "patientToken": "S-8-001",
+      "patientName": "saketh",
+      "mobileNumber": "1231255466",
+      "fingerprintId": "1",
+      "location": {
+        "lat": 13.0827,
+        "lng": 80.2707
+      },
+      "timestamp": "2026-02-25T17:57:26.407Z",
+      "status": "resolved",
+      "priority": "critical",
+      "hospital": {
+        "id": 8,
+        "name": "Chettinad Health City",
+        "address": "Rajiv Gandhi Salai, Kelambakkam, Chennai - 603103",
+        "contact": "+91-44-4741-1000"
+      },
+      "resolvedAt": "2026-02-25T18:10:28.658Z",
+      "resolvedBy": "admin"
+    },
+    {
+      "id": "EMG-8E1A3121",
+      "type": "emergency_button",
+      "deviceId": "DEV-226A3957",
+      "patientToken": "S-8-001",
+      "patientName": "saketh",
+      "mobileNumber": "1231255466",
+      "fingerprintId": "1",
+      "location": {
+        "lat": 13.0827,
+        "lng": 80.2707
+      },
+      "timestamp": "2026-02-25T18:02:18.253Z",
+      "status": "resolved",
+      "priority": "critical",
+      "hospital": {
+        "id": 8,
+        "name": "Chettinad Health City",
+        "address": "Rajiv Gandhi Salai, Kelambakkam, Chennai - 603103",
+        "contact": "+91-44-4741-1000"
+      },
+      "resolvedAt": "2026-02-25T18:10:25.969Z",
+      "resolvedBy": "admin"
+    },
+    {
+      "id": "EMG-F355AD85",
+      "type": "emergency_button",
+      "deviceId": "DEV-226A3957",
+      "patientToken": "S-8-001",
+      "patientName": "saketh",
+      "mobileNumber": "1231255466",
+      "fingerprintId": "1",
+      "location": {
+        "lat": 13.0827,
+        "lng": 80.2707
+      },
+      "timestamp": "2026-02-25T18:11:43.970Z",
+      "status": "resolved",
+      "priority": "critical",
+      "hospital": {
+        "id": 8,
+        "name": "Chettinad Health City",
+        "address": "Rajiv Gandhi Salai, Kelambakkam, Chennai - 603103",
+        "contact": "+91-44-4741-1000"
+      },
+      "resolvedAt": "2026-02-25T18:18:57.495Z",
+      "resolvedBy": "admin"
+    },
+    {
+      "id": "EMG-9D052B08",
+      "type": "emergency_button",
+      "deviceId": "DEV-226A3957",
+      "patientToken": "S-8-001",
+      "patientName": "saketh",
+      "mobileNumber": "1231255466",
+      "fingerprintId": "1",
+      "location": {
+        "lat": 13.0827,
+        "lng": 80.2707
+      },
+      "timestamp": "2026-02-25T18:14:24.285Z",
+      "status": "resolved",
+      "priority": "critical",
+      "hospital": {
+        "id": 8,
+        "name": "Chettinad Health City",
+        "address": "Rajiv Gandhi Salai, Kelambakkam, Chennai - 603103",
+        "contact": "+91-44-4741-1000"
+      },
+      "resolvedAt": "2026-02-25T18:18:54.619Z",
+      "resolvedBy": "admin"
+    },
+    {
+      "id": "EMG-0F9B00B1",
+      "type": "emergency_button",
+      "deviceId": "DEV-226A3957",
+      "patientToken": "S-8-001",
+      "patientName": "saketh",
+      "mobileNumber": "Unknown",
+      "fingerprintId": "1",
+      "location": {
+        "lat": 13.0827,
+        "lng": 80.2707
+      },
+      "timestamp": "2026-02-25T18:19:37.222Z",
+      "status": "resolved",
+      "priority": "critical",
+      "hospital": null,
+      "resolvedAt": "2026-02-25T18:21:46.392Z",
+      "resolvedBy": "admin"
+    },
+    {
+      "id": "EMG-217A7F66",
+      "type": "emergency_button",
+      "deviceId": "DEV-226A3957",
+      "patientToken": "S-8-001",
+      "patientName": "saketh",
+      "mobileNumber": "Unknown",
+      "fingerprintId": "1",
+      "location": {
+        "lat": 13.0827,
+        "lng": 80.2707
+      },
+      "timestamp": "2026-02-25T18:21:17.592Z",
+      "status": "resolved",
+      "priority": "critical",
+      "hospital": null,
+      "resolvedAt": "2026-02-25T18:21:31.038Z",
+      "resolvedBy": "admin"
+    },
+    {
+      "id": "EMG-5546BF4E",
+      "type": "emergency_button",
+      "deviceId": "DEV-226A3957",
+      "patientToken": "S-8-001",
+      "patientName": "saketh",
+      "mobileNumber": "Unknown",
+      "fingerprintId": "1",
+      "location": {
+        "lat": 13.0827,
+        "lng": 80.2707
+      },
+      "timestamp": "2026-02-25T18:22:31.715Z",
+      "status": "resolved",
+      "priority": "critical",
+      "hospital": null,
+      "resolvedAt": "2026-02-25T18:33:03.577Z",
+      "resolvedBy": "admin"
+    },
+    {
+      "id": "EMG-21B1F0F2",
+      "type": "emergency_button",
+      "deviceId": "DEV-226A3957",
+      "patientToken": "S-8-001",
+      "patientName": "saketh",
+      "mobileNumber": "Unknown",
+      "fingerprintId": "1",
+      "location": {
+        "lat": 13.0827,
+        "lng": 80.2707
+      },
+      "timestamp": "2026-02-25T18:32:37.659Z",
+      "status": "resolved",
+      "priority": "critical",
+      "hospital": null,
+      "resolvedAt": "2026-02-25T18:33:01.306Z",
+      "resolvedBy": "admin"
+    },
+    {
+      "id": "EMG-83D95E55",
+      "type": "emergency_button",
+      "deviceId": "DEV-226A3957",
+      "patientToken": "S-8-001",
+      "patientName": "saketh",
+      "mobileNumber": "Unknown",
+      "fingerprintId": "1",
+      "location": {
+        "lat": 13.0827,
+        "lng": 80.2707
+      },
+      "timestamp": "2026-02-25T18:33:13.582Z",
+      "status": "resolved",
+      "priority": "critical",
+      "hospital": null,
+      "resolvedAt": "2026-02-25T19:13:58.953Z",
+      "resolvedBy": "admin"
+    },
+    {
+      "id": "EMG-CC1D92EC",
+      "type": "emergency_button",
+      "deviceId": "DEV-226A3957",
+      "patientToken": "S-8-001",
+      "patientName": "saketh",
+      "mobileNumber": "Unknown",
+      "fingerprintId": "1",
+      "location": {
+        "lat": 13.0827,
+        "lng": 80.2707
+      },
+      "timestamp": "2026-02-25T18:38:27.067Z",
+      "status": "resolved",
+      "priority": "critical",
+      "hospital": null,
+      "resolvedAt": "2026-02-25T19:13:56.833Z",
+      "resolvedBy": "admin"
+    },
+    {
+      "id": "EMG-1F85D6BE",
+      "type": "emergency_button",
+      "deviceId": "DEV-05C47004",
+      "patientToken": "S-7-002",
+      "patientName": "karthik",
+      "mobileNumber": "8555842156",
+      "fingerprintId": "1",
+      "location": {
+        "lat": 13.0827,
+        "lng": 80.2707
+      },
+      "timestamp": "2026-02-25T19:13:37.416Z",
+      "status": "resolved",
+      "priority": "critical",
+      "hospital": {
+        "id": 7,
+        "name": "Global Health City",
+        "address": "439, Cheran Nagar, Perumbakkam, Chennai - 600100",
+        "contact": "+91-44-4477-7000"
+      },
+      "resolvedAt": "2026-02-25T19:14:02.106Z",
+      "resolvedBy": "admin"
+    },
+    {
+      "id": "EMG-43B3E5A3",
+      "type": "emergency_button",
+      "deviceId": "DEV-709C8F91",
+      "patientToken": "S-1-002",
+      "patientName": "saketh",
+      "mobileNumber": "1234567890",
+      "fingerprintId": "1",
+      "location": {
+        "lat": 13.0827,
+        "lng": 80.2707
+      },
+      "timestamp": "2026-02-25T19:15:24.062Z",
+      "status": "resolved",
+      "priority": "critical",
+      "hospital": {
+        "id": 1,
+        "name": "Apollo Hospitals - Greams Road",
+        "address": "21, Greams Lane, Off Greams Road, Chennai - 600006",
+        "contact": "+91-44-2829-3333"
+      },
+      "resolvedAt": "2026-02-25T19:15:42.632Z",
+      "resolvedBy": "admin"
+    },
+    {
+      "id": "EMG-EDC69F8B",
+      "type": "fall_detected",
+      "deviceId": "DEV-7A01B4F7",
+      "patientToken": "S-1-001",
+      "patientName": "karthik",
+      "mobileNumber": "4327215472",
+      "fingerprintId": "999",
+      "location": {
+        "lat": 13.0827,
+        "lng": 80.2707
+      },
+      "timestamp": "2026-03-02T14:20:50.747Z",
+      "status": "resolved",
+      "priority": "high",
+      "hospital": {
+        "id": 1,
+        "name": "Apollo Hospitals - Greams Road",
+        "address": "21, Greams Lane, Off Greams Road, Chennai - 600006",
+        "contact": "+91-44-2829-3333"
+      },
+      "fallData": {
+        "angleX": 56.73627,
+        "angleY": 17.80733,
+        "angleZ": 13.77528,
+        "accMagnitude": 0.938727
+      },
+      "message": "Fall detected - Patient may have fallen",
+      "resolvedAt": "2026-03-03T09:27:12.996Z",
+      "resolvedBy": "admin"
+    },
+    {
+      "id": "EMG-BFC7FB40",
+      "type": "fall_detected",
+      "deviceId": "DEV-7A01B4F7",
+      "patientToken": "S-1-001",
+      "patientName": "karthik",
+      "mobileNumber": "4327215472",
+      "fingerprintId": "999",
+      "location": {
+        "lat": 13.0827,
+        "lng": 80.2707
+      },
+      "timestamp": "2026-03-02T14:22:08.444Z",
+      "status": "resolved",
+      "priority": "high",
+      "hospital": {
+        "id": 1,
+        "name": "Apollo Hospitals - Greams Road",
+        "address": "21, Greams Lane, Off Greams Road, Chennai - 600006",
+        "contact": "+91-44-2829-3333"
+      },
+      "fallData": {
+        "angleX": -71.33936,
+        "angleY": 60.98092,
+        "angleZ": 62.76223,
+        "accMagnitude": 1.283309
+      },
+      "message": "Fall detected - Patient may have fallen",
+      "resolvedAt": "2026-03-03T09:27:09.020Z",
+      "resolvedBy": "admin"
+    },
+    {
+      "id": "EMG-0EF6CF99",
+      "type": "emergency_button",
+      "deviceId": "DEV-7A01B4F7",
+      "patientToken": "S-1-001",
+      "patientName": "karthik",
+      "mobileNumber": "4327215472",
+      "fingerprintId": "1",
+      "location": {
+        "lat": 13.0827,
+        "lng": 80.2707
+      },
+      "timestamp": "2026-03-02T14:22:53.550Z",
+      "status": "resolved",
+      "priority": "critical",
+      "hospital": {
+        "id": 1,
+        "name": "Apollo Hospitals - Greams Road",
+        "address": "21, Greams Lane, Off Greams Road, Chennai - 600006",
+        "contact": "+91-44-2829-3333"
+      },
+      "resolvedAt": "2026-03-02T14:24:25.786Z",
+      "resolvedBy": "admin"
+    },
+    {
+      "id": "EMG-CE1694F6",
+      "type": "fall_detected",
+      "deviceId": "DEV-226A3957",
+      "patientToken": "S-8-001",
+      "patientName": "Krishna",
+      "mobileNumber": "4327215472",
+      "fingerprintId": "999",
+      "location": {
+        "lat": 13.0827,
+        "lng": 80.2707
+      },
+      "timestamp": "2026-03-03T09:31:29.495Z",
+      "status": "active",
+      "priority": "high",
+      "hospital": {
+        "id": 8,
+        "name": "Chettinad Health City",
+        "address": "Rajiv Gandhi Salai, Kelambakkam, Chennai - 603103",
+        "contact": "+91-44-4741-1000"
+      },
+      "fallData": {
+        "angleX": -78.8689,
+        "angleY": 8.328536,
+        "angleZ": 151.9115,
+        "accMagnitude": 1.040242
+      },
+      "message": "Fall detected - Patient may have fallen"
+    },
+    {
+      "id": "EMG-161DB7F5",
+      "type": "emergency_button",
+      "deviceId": "DEV-226A3957",
+      "patientToken": "S-8-001",
+      "patientName": "Krishna",
+      "mobileNumber": "4327215472",
+      "fingerprintId": "1",
+      "location": {
+        "lat": 13.0827,
+        "lng": 80.2707
+      },
+      "timestamp": "2026-03-03T09:32:01.695Z",
+      "status": "active",
+      "priority": "critical",
+      "hospital": {
+        "id": 8,
+        "name": "Chettinad Health City",
+        "address": "Rajiv Gandhi Salai, Kelambakkam, Chennai - 603103",
+        "contact": "+91-44-4741-1000"
+      }
+    }
+  ]
+}

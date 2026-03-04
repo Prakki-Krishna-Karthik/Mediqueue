@@ -1,0 +1,212 @@
+[
+  {
+    "id": 1,
+    "name": "Dr. Devi Shetty",
+    "specialty": "Cardiology",
+    "hospitalId": 1,
+    "available": true
+  },
+  {
+    "id": 2,
+    "name": "Dr. Bhuwaneshwari",
+    "specialty": "Neurology",
+    "hospitalId": 1,
+    "available": true
+  },
+  {
+    "id": 3,
+    "name": "Dr. S. Rajasekaran",
+    "specialty": "Orthopedics",
+    "hospitalId": 1,
+    "available": true
+  },
+  {
+    "id": 4,
+    "name": "Dr. V. Shanta",
+    "specialty": "Oncology",
+    "hospitalId": 1,
+    "available": true
+  },
+  {
+    "id": 5,
+    "name": "Dr. Paul Ramesh",
+    "specialty": "Cardiology",
+    "hospitalId": 1,
+    "available": true
+  },
+  {
+    "id": 6,
+    "name": "Dr. K. Ganapathy",
+    "specialty": "Neurology",
+    "hospitalId": 1,
+    "available": true
+  },
+  {
+    "id": 7,
+    "name": "Dr. P.V.A. Mohandas",
+    "specialty": "Orthopedics",
+    "hospitalId": 2,
+    "available": true
+  },
+  {
+    "id": 8,
+    "name": "Dr. V. Bashi",
+    "specialty": "Cardiology",
+    "hospitalId": 2,
+    "available": true
+  },
+  {
+    "id": 9,
+    "name": "Dr. S. Elangovan",
+    "specialty": "Trauma Care",
+    "hospitalId": 2,
+    "available": true
+  },
+  {
+    "id": 10,
+    "name": "Dr. R. Ravichandran",
+    "specialty": "Neurology",
+    "hospitalId": 2,
+    "available": true
+  },
+  {
+    "id": 11,
+    "name": "Dr. C.N. Mani",
+    "specialty": "Cardiology",
+    "hospitalId": 3,
+    "available": true
+  },
+  {
+    "id": 12,
+    "name": "Dr. M. Balamurugan",
+    "specialty": "Gastroenterology",
+    "hospitalId": 3,
+    "available": true
+  },
+  {
+    "id": 13,
+    "name": "Dr. Georgi Abraham",
+    "specialty": "Nephrology",
+    "hospitalId": 3,
+    "available": true
+  },
+  {
+    "id": 14,
+    "name": "Dr. A. Duraisamy",
+    "specialty": "Cardiology",
+    "hospitalId": 4,
+    "available": true
+  },
+  {
+    "id": 15,
+    "name": "Dr. S. Chandrasekar",
+    "specialty": "Pulmonology",
+    "hospitalId": 4,
+    "available": true
+  },
+  {
+    "id": 16,
+    "name": "Dr. K. Senthil",
+    "specialty": "Critical Care",
+    "hospitalId": 4,
+    "available": true
+  },
+  {
+    "id": 17,
+    "name": "Dr. V. S. Natarajan",
+    "specialty": "General Medicine",
+    "hospitalId": 5,
+    "available": true
+  },
+  {
+    "id": 18,
+    "name": "Dr. S. Kumar",
+    "specialty": "Cardiology",
+    "hospitalId": 5,
+    "available": true
+  },
+  {
+    "id": 19,
+    "name": "Dr. V. Mohan",
+    "specialty": "Diabetology",
+    "hospitalId": 5,
+    "available": true
+  },
+  {
+    "id": 20,
+    "name": "Dr. R. Balaji",
+    "specialty": "Cardiology",
+    "hospitalId": 6,
+    "available": true
+  },
+  {
+    "id": 21,
+    "name": "Dr. S. Ramesh",
+    "specialty": "Neurology",
+    "hospitalId": 6,
+    "available": true
+  },
+  {
+    "id": 22,
+    "name": "Dr. K. Kalyanasundaram",
+    "specialty": "General Medicine",
+    "hospitalId": 6,
+    "available": true
+  },
+  {
+    "id": 23,
+    "name": "Dr. P. Karkuzhali",
+    "specialty": "Pediatrics",
+    "hospitalId": 6,
+    "available": true
+  },
+  {
+    "id": 24,
+    "name": "Dr. K. R. Balakrishnan",
+    "specialty": "Cardiology",
+    "hospitalId": 7,
+    "available": true
+  },
+  {
+    "id": 25,
+    "name": "Dr. R. Ravi",
+    "specialty": "Transplant",
+    "hospitalId": 7,
+    "available": true
+  },
+  {
+    "id": 26,
+    "name": "Dr. S. Rajan",
+    "specialty": "Oncology",
+    "hospitalId": 7,
+    "available": true
+  },
+  {
+    "id": 27,
+    "name": "Dr. V. Srinivas",
+    "specialty": "Neurology",
+    "hospitalId": 7,
+    "available": true
+  },
+  {
+    "id": 28,
+    "name": "Dr. P. S. Rajan",
+    "specialty": "Cardiology",
+    "hospitalId": 8,
+    "available": true
+  },
+  {
+    "id": 29,
+    "name": "Dr. M. S. Ravi",
+    "specialty": "Orthopedics",
+    "hospitalId": 8,
+    "available": true
+  },
+  {
+    "id": 30,
+    "name": "Dr. R. Saravanan",
+    "specialty": "Neurology",
+    "hospitalId": 8,
+    "available": true
+  }
+]

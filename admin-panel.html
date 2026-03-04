@@ -1,0 +1,1437 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MediQueue Chennai - Complete Admin Dashboard</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* Base Styles */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body { 
+            background-color: #f3f4f6;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+        }
+        
+        /* Emergency Banner */
+        .emergency-banner {
+            background-color: #dc2626;
+            color: white;
+            padding: 8px;
+            text-align: center;
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.8; }
+            100% { opacity: 1; }
+        }
+        
+        /* Fall Detection Banner */
+        .fall-banner {
+            background-color: #f97316;
+            color: white;
+            padding: 8px;
+            text-align: center;
+            position: sticky;
+            top: 40px;
+            z-index: 45;
+            animation: pulse 2s infinite;
+        }
+        
+        /* Header */
+        .main-header {
+            background-color: white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            padding: 12px 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 80px;
+            z-index: 40;
+        }
+        
+        /* Stats Cards */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+            margin: 24px;
+        }
+        
+        .stat-card {
+            background: white;
+            border-radius: 8px;
+            padding: 16px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            display: flex;
+            align-items: center;
+            transition: transform 0.2s;
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+        }
+        
+        .stat-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 16px;
+        }
+        
+        .stat-content h3 {
+            font-size: 24px;
+            font-weight: bold;
+            margin: 0;
+        }
+        
+        .stat-content p {
+            color: #6b7280;
+            margin: 0;
+            font-size: 14px;
+        }
+        
+        /* Severity Cards */
+        .severity-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+            margin: 24px;
+        }
+        
+        .severity-card {
+            padding: 16px;
+            border-radius: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .severity-card.critical { background: #fee2e2; border: 1px solid #fecaca; }
+        .severity-card.urgent { background: #ffedd5; border: 1px solid #fed7aa; }
+        .severity-card.moderate { background: #dbeafe; border: 1px solid #bfdbfe; }
+        .severity-card.mild { background: #dcfce7; border: 1px solid #bbf7d0; }
+        
+        /* Tabs */
+        .tabs-container {
+            background: white;
+            margin: 24px;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        
+        .tabs-header {
+            display: flex;
+            border-bottom: 1px solid #e5e7eb;
+            background: #f9fafb;
+        }
+        
+        .tab-btn {
+            padding: 12px 24px;
+            border: none;
+            background: none;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            color: #6b7280;
+            transition: all 0.2s;
+        }
+        
+        .tab-btn:hover {
+            color: #3b82f6;
+            background: #eff6ff;
+        }
+        
+        .tab-btn.active {
+            color: #3b82f6;
+            border-bottom: 2px solid #3b82f6;
+            background: white;
+        }
+        
+        .tab-content {
+            padding: 24px;
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        /* Filter Section */
+        .filters-section {
+            background: white;
+            margin: 24px;
+            padding: 20px;
+            border-radius: 8px;
+        }
+        
+        .filters-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 16px;
+            margin-top: 16px;
+        }
+        
+        .filter-item {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .filter-item label {
+            font-size: 12px;
+            color: #6b7280;
+            margin-bottom: 4px;
+        }
+        
+        .filter-item input,
+        .filter-item select {
+            padding: 8px 12px;
+            border: 1px solid #d1d5db;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+        
+        .filter-actions {
+            display: flex;
+            gap: 8px;
+            margin-top: 16px;
+        }
+        
+        .btn {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            transition: background 0.2s;
+        }
+        
+        .btn-primary {
+            background: #3b82f6;
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: #2563eb;
+        }
+        
+        .btn-secondary {
+            background: #6b7280;
+            color: white;
+        }
+        
+        .btn-secondary:hover {
+            background: #4b5563;
+        }
+        
+        /* Table */
+        .table-container {
+            background: white;
+            margin: 24px;
+            border-radius: 8px;
+            overflow-x: auto;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        th {
+            background: #f9fafb;
+            padding: 12px 16px;
+            text-align: left;
+            font-size: 12px;
+            font-weight: 600;
+            color: #6b7280;
+            border-bottom: 1px solid #e5e7eb;
+        }
+        
+        td {
+            padding: 12px 16px;
+            border-bottom: 1px solid #e5e7eb;
+            font-size: 14px;
+        }
+        
+        tr:hover {
+            background: #f9fafb;
+        }
+        
+        .badge {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 9999px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+        
+        .badge-critical { background: #fee2e2; color: #dc2626; }
+        .badge-urgent { background: #ffedd5; color: #ea580c; }
+        .badge-moderate { background: #dbeafe; color: #2563eb; }
+        .badge-mild { background: #dcfce7; color: #16a34a; }
+        .badge-waiting { background: #fef3c7; color: #92400e; }
+        .badge-completed { background: #d1fae5; color: #065f46; }
+        .badge-fall { background: #f97316; color: white; }
+        
+        /* Device Cards */
+        .devices-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 16px;
+        }
+        
+        .device-card {
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            padding: 16px;
+        }
+        
+        .device-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+        
+        .device-status {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+        }
+        
+        .status-online { background: #10b981; animation: pulse 1.5s infinite; }
+        .status-offline { background: #9ca3af; }
+        .status-emergency { background: #dc2626; animation: pulse 1s infinite; }
+        .status-fall { background: #f97316; animation: pulse 1s infinite; }
+        
+        .health-reading {
+            display: inline-block;
+            padding: 4px 8px;
+            background: #f3f4f6;
+            border-radius: 4px;
+            margin-right: 8px;
+            font-size: 12px;
+        }
+        
+        .health-critical { color: #dc2626; font-weight: bold; }
+        .health-warning { color: #f59e0b; }
+        .health-normal { color: #10b981; }
+        
+        /* Fall Data */
+        .fall-data {
+            background: #fff7ed;
+            border: 1px solid #fed7aa;
+            border-radius: 4px;
+            padding: 8px;
+            margin-top: 8px;
+            font-size: 11px;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .severity-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .filters-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .tabs-header {
+                flex-wrap: wrap;
+            }
+            
+            .tab-btn {
+                flex: 1 1 auto;
+                text-align: center;
+            }
+        }
+        
+        @keyframes fade-in {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .animate-fade-in {
+            animation: fade-in 0.3s ease-out;
+        }
+    </style>
+</head>
+<body>
+    <!-- Emergency Banner -->
+    <div id="emergencyBanner" class="emergency-banner" style="display: none;">
+        <i class="fas fa-exclamation-triangle mr-2"></i>
+        <span id="emergencyCount">0</span> Active Emergency Alerts - Immediate Attention Required
+    </div>
+    
+    <!-- Fall Detection Banner -->
+    <div id="fallBanner" class="fall-banner" style="display: none;">
+        <i class="fas fa-exclamation-triangle mr-2"></i>
+        <span id="fallCount">0</span> Active Fall Detections - Check Immediately
+    </div>
+
+    <!-- Header -->
+    <header class="main-header">
+        <div class="flex items-center">
+            <div class="bg-gradient-to-r from-blue-600 to-purple-600 p-2 rounded-lg mr-3">
+                <i class="fas fa-hospital-user text-white text-xl"></i>
+            </div>
+            <div>
+                <h1 class="text-xl font-bold">MediQueue Chennai Admin</h1>
+                <p class="text-xs text-gray-500">Complete Healthcare Management System</p>
+            </div>
+        </div>
+        <div class="flex items-center space-x-3">
+            <span class="text-gray-600">Welcome, <span id="adminUsername" class="font-semibold">admin</span></span>
+            <button id="refreshBtn" class="btn btn-primary">
+                <i class="fas fa-sync-alt mr-2"></i> Refresh
+            </button>
+            <button id="logoutBtn" class="btn btn-secondary">
+                <i class="fas fa-sign-out-alt mr-2"></i> Logout
+            </button>
+        </div>
+    </header>
+
+    <!-- Stats Cards -->
+    <div class="stats-grid">
+        <div class="stat-card">
+            <div class="stat-icon bg-blue-100">
+                <i class="fas fa-brain text-blue-600 text-xl"></i>
+            </div>
+            <div class="stat-content">
+                <h3 id="aiAnalysisCount">0</h3>
+                <p>AI Analyzed</p>
+            </div>
+        </div>
+        
+        <div class="stat-card">
+            <div class="stat-icon bg-purple-100">
+                <i class="fas fa-microchip text-purple-600 text-xl"></i>
+            </div>
+            <div class="stat-content">
+                <h3 id="esp32DevicesCount">0</h3>
+                <p>ESP32 Devices</p>
+            </div>
+        </div>
+        
+        <div class="stat-card">
+            <div class="stat-icon bg-red-100">
+                <i class="fas fa-exclamation-triangle text-red-600 text-xl"></i>
+            </div>
+            <div class="stat-content">
+                <h3 id="emergencyAlertsCount">0</h3>
+                <p>Emergency Alerts</p>
+            </div>
+        </div>
+        
+        <div class="stat-card">
+            <div class="stat-icon bg-orange-100">
+                <i class="fas fa-exclamation-triangle text-orange-600 text-xl"></i>
+            </div>
+            <div class="stat-content">
+                <h3 id="fallAlertsCount">0</h3>
+                <p>Fall Detections</p>
+            </div>
+        </div>
+        
+        <div class="stat-card">
+            <div class="stat-icon bg-green-100">
+                <i class="fas fa-hospital text-green-600 text-xl"></i>
+            </div>
+            <div class="stat-content">
+                <h3 id="hospitalsCount">8</h3>
+                <p>Chennai Hospitals</p>
+            </div>
+        </div>
+        
+        <div class="stat-card">
+            <div class="stat-icon bg-yellow-100">
+                <i class="fas fa-chart-line text-yellow-600 text-xl"></i>
+            </div>
+            <div class="stat-content">
+                <h3 id="todayPatients">0</h3>
+                <p>Today's Patients</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Severity Cards -->
+    <div class="severity-grid">
+        <div class="severity-card critical">
+            <div>
+                <p class="text-sm text-red-600 font-semibold">Critical</p>
+                <h3 class="text-2xl font-bold text-red-700" id="criticalCount">0</h3>
+            </div>
+            <i class="fas fa-exclamation-triangle text-red-500 text-xl"></i>
+        </div>
+        
+        <div class="severity-card urgent">
+            <div>
+                <p class="text-sm text-orange-600 font-semibold">Urgent</p>
+                <h3 class="text-2xl font-bold text-orange-700" id="urgentCount">0</h3>
+            </div>
+            <i class="fas fa-clock text-orange-500 text-xl"></i>
+        </div>
+        
+        <div class="severity-card moderate">
+            <div>
+                <p class="text-sm text-blue-600 font-semibold">Moderate</p>
+                <h3 class="text-2xl font-bold text-blue-700" id="moderateCount">0</h3>
+            </div>
+            <i class="fas fa-stethoscope text-blue-500 text-xl"></i>
+        </div>
+        
+        <div class="severity-card mild">
+            <div>
+                <p class="text-sm text-green-600 font-semibold">Mild</p>
+                <h3 class="text-2xl font-bold text-green-700" id="mildCount">0</h3>
+            </div>
+            <i class="fas fa-check-circle text-green-500 text-xl"></i>
+        </div>
+    </div>
+
+    <!-- Tabs -->
+    <div class="tabs-container">
+        <div class="tabs-header">
+            <button class="tab-btn active" data-tab="queue">Queue Management</button>
+            <button class="tab-btn" data-tab="esp32">ESP32 Devices</button>
+            <button class="tab-btn" data-tab="emergency">Emergency Alerts</button>
+            <button class="tab-btn" data-tab="fall">Fall Detections</button>
+            <button class="tab-btn" data-tab="hospitals">Chennai Hospitals</button>
+            <button class="tab-btn" data-tab="analytics">Analytics</button>
+        </div>
+
+        <!-- Queue Management Tab -->
+        <div id="tab-queue" class="tab-content active">
+            <!-- Filters -->
+            <div class="filters-section">
+                <h3 class="font-semibold mb-4">Queue Filters</h3>
+                <div class="filters-grid">
+                    <div class="filter-item">
+                        <label>Date</label>
+                        <input type="date" id="filterDate">
+                    </div>
+                    
+                    <div class="filter-item">
+                        <label>Hospital</label>
+                        <select id="hospitalFilter">
+                            <option value="all">All Hospitals</option>
+                        </select>
+                    </div>
+                    
+                    <div class="filter-item">
+                        <label>Status</label>
+                        <select id="statusFilter">
+                            <option value="all">All Status</option>
+                            <option value="Waiting">Waiting</option>
+                            <option value="Completed">Completed</option>
+                        </select>
+                    </div>
+                    
+                    <div class="filter-item">
+                        <label>Severity</label>
+                        <select id="severityFilter">
+                            <option value="all">All Severity</option>
+                            <option value="critical">Critical</option>
+                            <option value="urgent">Urgent</option>
+                            <option value="moderate">Moderate</option>
+                            <option value="mild">Mild</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="filter-actions">
+                    <button id="todayBtn" class="btn btn-primary">Today</button>
+                    <button id="resetFilterBtn" class="btn btn-secondary">Reset Filters</button>
+                </div>
+            </div>
+
+            <!-- Queue Table -->
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Token</th>
+                            <th>Patient</th>
+                            <th>Hospital</th>
+                            <th>AI Severity</th>
+                            <th>Doctor</th>
+                            <th>Slot</th>
+                            <th>Est. Time</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="queueTableBody">
+                        <!-- Data will be populated here -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- ESP32 Devices Tab -->
+        <div id="tab-esp32" class="tab-content">
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon bg-green-100">
+                        <i class="fas fa-check-circle text-green-600"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h3 id="onlineDevices">0</h3>
+                        <p>Online Devices</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon bg-red-100">
+                        <i class="fas fa-exclamation-triangle text-red-600"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h3 id="emergencyDevices">0</h3>
+                        <p>Emergency Mode</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon bg-orange-100">
+                        <i class="fas fa-exclamation-triangle text-orange-600"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h3 id="fallDevices">0</h3>
+                        <p>Fall Detected</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon bg-blue-100">
+                        <i class="fas fa-battery-three-quarters text-blue-600"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h3 id="avgBattery">0%</h3>
+                        <p>Avg Battery</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="devices-grid" id="devicesList">
+                <!-- Devices will be populated here -->
+            </div>
+        </div>
+
+        <!-- Emergency Alerts Tab -->
+        <div id="tab-emergency" class="tab-content">
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon bg-red-100">
+                        <i class="fas fa-exclamation-circle text-red-600"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h3 id="activeAlerts">0</h3>
+                        <p>Active Alerts</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon bg-green-100">
+                        <i class="fas fa-check-circle text-green-600"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h3 id="resolvedAlerts">0</h3>
+                        <p>Resolved Today</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Alert ID</th>
+                            <th>Patient</th>
+                            <th>Type</th>
+                            <th>Location</th>
+                            <th>Health Data</th>
+                            <th>Time</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="emergencyTableBody">
+                        <!-- Alerts will be populated here -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Fall Detections Tab -->
+        <div id="tab-fall" class="tab-content">
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon bg-orange-100">
+                        <i class="fas fa-exclamation-triangle text-orange-600"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h3 id="activeFallAlerts">0</h3>
+                        <p>Active Falls</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon bg-green-100">
+                        <i class="fas fa-check-circle text-green-600"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h3 id="resolvedFallAlerts">0</h3>
+                        <p>Resolved Today</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Alert ID</th>
+                            <th>Patient</th>
+                            <th>Fall Data</th>
+                            <th>Location</th>
+                            <th>Angles</th>
+                            <th>Time</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="fallTableBody">
+                        <!-- Fall alerts will be populated here -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Hospitals Tab -->
+        <div id="tab-hospitals" class="tab-content">
+            <div class="devices-grid" id="hospitalsList">
+                <!-- Hospitals will be populated here -->
+            </div>
+        </div>
+
+        <!-- Analytics Tab -->
+        <div id="tab-analytics" class="tab-content">
+            <div class="grid grid-cols-2 gap-6">
+                <div class="bg-white p-4 rounded-lg">
+                    <h3 class="font-semibold mb-4">Severity Distribution</h3>
+                    <canvas id="severityChart" height="200"></canvas>
+                </div>
+                <div class="bg-white p-4 rounded-lg">
+                    <h3 class="font-semibold mb-4">Patient Flow (Last 7 Days)</h3>
+                    <canvas id="flowChart" height="200"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <script>
+    // DOM Elements
+    const tabs = document.querySelectorAll('.tab-btn');
+    const tabContents = document.querySelectorAll('.tab-content');
+    
+    // Tab Switching
+    tabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+            const tabId = tab.dataset.tab;
+            
+            // Update active tab
+            tabs.forEach(t => t.classList.remove('active'));
+            tab.classList.add('active');
+            
+            // Show corresponding content
+            tabContents.forEach(content => {
+                content.classList.remove('active');
+                if (content.id === `tab-${tabId}`) {
+                    content.classList.add('active');
+                    
+                    // Load tab-specific data
+                    if (tabId === 'analytics') {
+                        initializeCharts();
+                    }
+                }
+            });
+        });
+    });
+
+    // Set today's date
+    const today = new Date().toISOString().split('T')[0];
+    document.getElementById('filterDate').value = today;
+
+    // Check authentication on load
+    checkAuth();
+
+    // Load initial data
+    loadQueueData();
+    loadESP32Devices();
+    loadEmergencyAlerts();
+    loadFallAlerts();
+    loadHospitalsList();
+
+    // Refresh button
+    document.getElementById('refreshBtn').addEventListener('click', () => {
+        loadQueueData();
+        loadESP32Devices();
+        loadEmergencyAlerts();
+        loadFallAlerts();
+        loadHospitalsList();
+    });
+
+    // Logout
+    document.getElementById('logoutBtn').addEventListener('click', handleLogout);
+
+    // Filter buttons
+    document.getElementById('todayBtn').addEventListener('click', () => {
+        document.getElementById('filterDate').value = today;
+        loadQueueData();
+    });
+
+    document.getElementById('resetFilterBtn').addEventListener('click', () => {
+        document.getElementById('filterDate').value = today;
+        document.getElementById('hospitalFilter').value = 'all';
+        document.getElementById('statusFilter').value = 'all';
+        document.getElementById('severityFilter').value = 'all';
+        loadQueueData();
+    });
+
+    // ==================== AUTHENTICATION ====================
+
+    async function checkAuth() {
+        try {
+            const response = await fetch('/api/auth-status');
+            const data = await response.json();
+            
+            if (data.isAuthenticated) {
+                document.getElementById('adminUsername').textContent = data.username;
+            } else {
+                window.location.href = '/login';
+            }
+        } catch (error) {
+            console.error('Auth check failed:', error);
+            window.location.href = '/login';
+        }
+    }
+
+    async function handleLogout() {
+        try {
+            await fetch('/api/admin-logout', { method: 'POST' });
+        } catch (error) {
+            console.error('Logout error:', error);
+        }
+        window.location.href = '/login';
+    }
+
+    function getCookie(name) {
+        const value = `; ${document.cookie}`;
+        const parts = value.split(`; ${name}=`);
+        if (parts.length === 2) return parts.pop().split(';').shift();
+    }
+
+    // ==================== QUEUE MANAGEMENT ====================
+
+    async function loadQueueData() {
+        try {
+            const hospitalFilter = document.getElementById('hospitalFilter').value;
+            const url = hospitalFilter !== 'all' 
+                ? `/api/queue/${hospitalFilter}` 
+                : '/api/queue';
+            
+            const response = await fetch(url);
+            const data = await response.json();
+            
+            if (data.success) {
+                updateQueueTable(data.queue);
+                updateStats(data.queue);
+                updateHospitalFilter(data.queue);
+            }
+        } catch (error) {
+            console.error('Error loading queue:', error);
+            showNotification('Failed to load queue data', 'error');
+        }
+    }
+
+    function updateHospitalFilter(queue) {
+        const hospitals = [...new Set(queue.map(p => p.hospitalName).filter(Boolean))];
+        const select = document.getElementById('hospitalFilter');
+        
+        select.innerHTML = '<option value="all">All Hospitals</option>' +
+            hospitals.map(h => `<option value="${h}">${h}</option>`).join('');
+    }
+
+    function updateQueueTable(queue) {
+        const tbody = document.getElementById('queueTableBody');
+        
+        if (!queue || queue.length === 0) {
+            tbody.innerHTML = '<tr><td colspan="9" class="text-center py-4">No patients in queue</td></tr>';
+            return;
+        }
+        
+        tbody.innerHTML = queue.map(p => `
+            <tr>
+                <td class="font-mono">${p.token || 'N/A'}</td>
+                <td>${p.patientName || 'N/A'}</td>
+                <td>${p.hospitalName || 'N/A'}</td>
+                <td>
+                    ${p.severityCategory ? 
+                        `<span class="badge badge-${p.severityCategory}">${p.severityCategory}</span>` : 
+                        '<span class="text-gray-400">-</span>'}
+                </td>
+                <td>${p.doctorName || 'Pending'}</td>
+                <td>${p.slotNumber || '-'}</td>
+                <td>${p.estimatedStartTimeFormatted || '-'}</td>
+                <td>
+                    <span class="badge badge-${p.status?.toLowerCase() === 'completed' ? 'completed' : 'waiting'}">
+                        ${p.status || 'Waiting'}
+                    </span>
+                </td>
+                <td>
+                    ${p.status === 'Waiting' ? 
+                        `<button onclick="completePatient('${p.token}')" class="text-green-600 hover:text-green-800 mr-2" title="Mark as Completed">
+                            <i class="fas fa-check-circle"></i>
+                        </button>` : ''
+                    }
+                    <button onclick="removePatient('${p.token}')" class="text-red-600 hover:text-red-800" title="Remove from Queue">
+                        <i class="fas fa-trash-alt"></i>
+                    </button>
+                </td>
+            </tr>
+        `).join('');
+    }
+
+    function updateStats(queue) {
+        const aiAnalyzed = queue.filter(p => p.severityCategory).length;
+        document.getElementById('aiAnalysisCount').textContent = aiAnalyzed;
+        document.getElementById('todayPatients').textContent = queue.length;
+        document.getElementById('hospitalsCount').textContent = '8';
+        
+        document.getElementById('criticalCount').textContent = queue.filter(p => p.severityCategory === 'critical').length;
+        document.getElementById('urgentCount').textContent = queue.filter(p => p.severityCategory === 'urgent').length;
+        document.getElementById('moderateCount').textContent = queue.filter(p => p.severityCategory === 'moderate').length;
+        document.getElementById('mildCount').textContent = queue.filter(p => p.severityCategory === 'mild').length;
+    }
+
+    // ==================== PATIENT ACTIONS ====================
+
+    async function completePatient(token) {
+        if (!confirm(`Mark patient ${token} as completed?`)) return;
+        
+        try {
+            const response = await fetch('/api/complete', {
+                method: 'POST',
+                headers: { 
+                    'Content-Type': 'application/json',
+                    'x-session-token': getCookie('sessionToken') || ''
+                },
+                body: JSON.stringify({ token })
+            });
+            
+            const data = await response.json();
+            
+            if (data.success) {
+                showNotification(`Patient ${token} marked as completed`, 'success');
+                loadQueueData();
+            } else {
+                showNotification(data.error || 'Failed to complete patient', 'error');
+            }
+        } catch (error) {
+            console.error('Error completing patient:', error);
+            showNotification('Network error', 'error');
+        }
+    }
+
+    async function removePatient(token) {
+        if (!confirm(`Remove patient ${token} from queue? This action cannot be undone.`)) return;
+        
+        try {
+            const response = await fetch('/api/remove', {
+                method: 'POST',
+                headers: { 
+                    'Content-Type': 'application/json',
+                    'x-session-token': getCookie('sessionToken') || ''
+                },
+                body: JSON.stringify({ token })
+            });
+            
+            const data = await response.json();
+            
+            if (data.success) {
+                showNotification(`Patient ${token} removed from queue`, 'success');
+                loadQueueData();
+            } else {
+                showNotification(data.error || 'Failed to remove patient', 'error');
+            }
+        } catch (error) {
+            console.error('Error removing patient:', error);
+            showNotification('Network error', 'error');
+        }
+    }
+
+    // ==================== ESP32 DEVICES ====================
+
+    async function loadESP32Devices() {
+        try {
+            const response = await fetch('/api/patient/devices', {
+                headers: {
+                    'x-session-token': getCookie('sessionToken') || ''
+                }
+            });
+            
+            if (!response.ok) throw new Error('Failed to fetch');
+            
+            const data = await response.json();
+            
+            if (data.success && data.devices) {
+                // Update stats
+                document.getElementById('esp32DevicesCount').textContent = data.devices.length;
+                document.getElementById('onlineDevices').textContent = data.statistics?.online || 0;
+                document.getElementById('emergencyDevices').textContent = data.statistics?.emergency || 0;
+                
+                // Count devices with fall detection (you'll need to track this in your data)
+                const fallDevices = data.devices.filter(d => d.fallDetected || false).length;
+                document.getElementById('fallDevices').textContent = fallDevices;
+                
+                // Calculate average battery
+                const totalBattery = data.devices.reduce((sum, d) => sum + (d.battery || 0), 0);
+                const avgBattery = data.devices.length > 0 ? Math.round(totalBattery / data.devices.length) : 0;
+                document.getElementById('avgBattery').textContent = avgBattery + '%';
+                
+                // Display devices
+                updateDevicesDisplay(data.devices);
+            } else {
+                showNoDevices();
+            }
+        } catch (error) {
+            console.error('Error loading devices:', error);
+            showNoDevices();
+        }
+    }
+
+    function showNoDevices() {
+        document.getElementById('esp32DevicesCount').textContent = '0';
+        document.getElementById('onlineDevices').textContent = '0';
+        document.getElementById('emergencyDevices').textContent = '0';
+        document.getElementById('fallDevices').textContent = '0';
+        document.getElementById('avgBattery').textContent = '0%';
+        document.getElementById('devicesList').innerHTML = 
+            '<p class="text-gray-500 text-center py-4">No ESP32 devices connected</p>';
+    }
+
+    function updateDevicesDisplay(devices) {
+        const container = document.getElementById('devicesList');
+        
+        if (!devices || devices.length === 0) {
+            showNoDevices();
+            return;
+        }
+        
+        container.innerHTML = devices.map(d => {
+            const lastSeen = d.lastSeen ? new Date(d.lastSeen) : new Date();
+            const isOnline = (new Date() - lastSeen) < 300000; // 5 minutes
+            let statusClass = 'status-offline';
+            let statusText = 'Offline';
+            
+            if (d.emergencyMode) {
+                statusClass = 'status-emergency';
+                statusText = 'EMERGENCY';
+            } else if (d.fallDetected) {
+                statusClass = 'status-fall';
+                statusText = 'FALL DETECTED';
+            } else if (isOnline) {
+                statusClass = 'status-online';
+                statusText = 'Online';
+            }
+            
+            const timeAgo = getTimeAgo(lastSeen);
+            
+            // Get latest health reading if available
+            const heartRate = d.lastHealthReading?.heartRate || '--';
+            const spo2 = d.lastHealthReading?.spo2 || '--';
+            
+            return `
+                <div class="device-card ${d.emergencyMode ? 'border-red-500 bg-red-50' : d.fallDetected ? 'border-orange-500 bg-orange-50' : ''}">
+                    <div class="device-header">
+                        <div>
+                            <span class="font-semibold">${d.patientName || 'Unknown'}</span>
+                            <span class="text-xs text-gray-500 ml-2">${d.deviceId || ''}</span>
+                        </div>
+                        <div class="device-status ${statusClass}" title="${statusText}"></div>
+                    </div>
+                    
+                    <div class="mb-2 text-sm">
+                        <span class="health-reading ${(heartRate !== '--' && heartRate > 100) ? 'health-critical' : 'health-normal'}">
+                            <i class="fas fa-heartbeat text-red-500 mr-1"></i>${heartRate}
+                        </span>
+                        <span class="health-reading ${(spo2 !== '--' && spo2 < 95) ? 'health-warning' : 'health-normal'}">
+                            <i class="fas fa-lungs text-blue-500 mr-1"></i>${spo2}%
+                        </span>
+                        <span class="health-reading">
+                            <i class="fas fa-battery-${(d.battery || 0) > 60 ? 'full' : (d.battery || 0) > 20 ? 'half' : 'empty'} mr-1"></i>
+                            ${d.battery || 0}%
+                        </span>
+                    </div>
+                    
+                    <div class="text-xs text-gray-500">
+                        <i class="fas fa-map-marker-alt mr-1"></i>
+                        ${d.location ? 
+                            `Lat: ${d.location.lat?.toFixed(4) || '--'}, Lng: ${d.location.lng?.toFixed(4) || '--'}` : 
+                            'Location unknown'}
+                        <br>
+                        Last seen: ${timeAgo}
+                    </div>
+                    
+                    ${d.emergencyMode ? 
+                        '<div class="mt-2 text-xs bg-red-600 text-white p-1 rounded text-center animate-pulse">🚨 EMERGENCY MODE ACTIVE</div>' : 
+                        d.fallDetected ?
+                        '<div class="mt-2 text-xs bg-orange-500 text-white p-1 rounded text-center animate-pulse">⚠️ FALL DETECTED</div>' :
+                        ''}
+                </div>
+            `;
+        }).join('');
+    }
+
+    function getTimeAgo(date) {
+        const seconds = Math.floor((new Date() - date) / 1000);
+        
+        if (seconds < 60) return 'Just now';
+        if (seconds < 3600) return Math.floor(seconds / 60) + 'm ago';
+        if (seconds < 86400) return Math.floor(seconds / 3600) + 'h ago';
+        return Math.floor(seconds / 86400) + 'd ago';
+    }
+
+    // ==================== EMERGENCY ALERTS ====================
+
+    async function loadEmergencyAlerts() {
+        try {
+            const response = await fetch('/api/admin/emergency-alerts', {
+                headers: {
+                    'x-session-token': getCookie('sessionToken') || ''
+                }
+            });
+            
+            if (!response.ok) throw new Error('Failed to fetch');
+            
+            const data = await response.json();
+            
+            if (data.success) {
+                const alerts = data.alerts || [];
+                
+                // Separate regular emergencies from fall detections
+                const regularEmergencies = alerts.filter(a => a.type !== 'fall_detected');
+                const fallDetections = alerts.filter(a => a.type === 'fall_detected');
+                
+                // Update stats
+                document.getElementById('emergencyAlertsCount').textContent = regularEmergencies.length;
+                document.getElementById('activeAlerts').textContent = regularEmergencies.length;
+                document.getElementById('fallAlertsCount').textContent = fallDetections.length;
+                
+                // Show/hide banners
+                document.getElementById('emergencyBanner').style.display = regularEmergencies.length > 0 ? 'block' : 'none';
+                document.getElementById('emergencyCount').textContent = regularEmergencies.length;
+                
+                document.getElementById('fallBanner').style.display = fallDetections.length > 0 ? 'block' : 'none';
+                document.getElementById('fallCount').textContent = fallDetections.length;
+                
+                // Update tables
+                updateEmergencyTable(regularEmergencies);
+            }
+        } catch (error) {
+            console.error('Error loading alerts:', error);
+            document.getElementById('emergencyTableBody').innerHTML = 
+                '<tr><td colspan="8" class="text-center py-4">Error loading alerts</td></tr>';
+        }
+    }
+
+    function updateEmergencyTable(alerts) {
+        const tbody = document.getElementById('emergencyTableBody');
+        
+        if (!alerts || alerts.length === 0) {
+            tbody.innerHTML = '<tr><td colspan="8" class="text-center py-4">No active emergency alerts</td></tr>';
+            return;
+        }
+        
+        tbody.innerHTML = alerts.map(a => `
+            <tr>
+                <td class="font-mono">${a.id || 'N/A'}</td>
+                <td>
+                    ${a.patientName || 'Unknown'}<br>
+                    <span class="text-xs text-gray-500">${a.patientToken || ''}</span>
+                </td>
+                <td>
+                    <span class="badge ${a.type === 'emergency_button' ? 'badge-critical' : 'badge-urgent'}">
+                        ${a.type === 'emergency_button' ? 'Emergency Button' : a.type || 'Unknown'}
+                    </span>
+                </td>
+                <td>
+                    ${a.location ? 
+                        `Lat: ${a.location.lat?.toFixed(4) || '--'}<br>Lng: ${a.location.lng?.toFixed(4) || '--'}` : 
+                        'Location unknown'}
+                </td>
+                <td>
+                    ${a.healthData ? 
+                        `HR: ${a.healthData.heartRate || '--'}<br>SpO2: ${a.healthData.spo2 || '--'}%` : 
+                        'No health data'}
+                </td>
+                <td>${a.timestamp ? new Date(a.timestamp).toLocaleString() : 'Unknown'}</td>
+                <td><span class="badge badge-critical">ACTIVE</span></td>
+                <td>
+                    <button onclick="resolveAlert('${a.id}')" class="text-green-600 hover:text-green-800" title="Resolve Alert">
+                        <i class="fas fa-check-circle"></i>
+                    </button>
+                </td>
+            </tr>
+        `).join('');
+    }
+
+    // ==================== FALL DETECTIONS ====================
+
+    async function loadFallAlerts() {
+        try {
+            const response = await fetch('/api/admin/emergency-alerts', {
+                headers: {
+                    'x-session-token': getCookie('sessionToken') || ''
+                }
+            });
+            
+            if (!response.ok) throw new Error('Failed to fetch');
+            
+            const data = await response.json();
+            
+            if (data.success) {
+                const alerts = data.alerts || [];
+                const fallAlerts = alerts.filter(a => a.type === 'fall_detected');
+                
+                document.getElementById('activeFallAlerts').textContent = fallAlerts.length;
+                document.getElementById('resolvedFallAlerts').textContent = 0; // You can add resolved count if available
+                
+                updateFallTable(fallAlerts);
+            }
+        } catch (error) {
+            console.error('Error loading fall alerts:', error);
+            document.getElementById('fallTableBody').innerHTML = 
+                '<tr><td colspan="8" class="text-center py-4">Error loading fall alerts</td></tr>';
+        }
+    }
+
+    function updateFallTable(alerts) {
+        const tbody = document.getElementById('fallTableBody');
+        
+        if (!alerts || alerts.length === 0) {
+            tbody.innerHTML = '<tr><td colspan="8" class="text-center py-4">No fall detections</td></tr>';
+            return;
+        }
+        
+        tbody.innerHTML = alerts.map(a => {
+            const fallData = a.fallData || {};
+            const angles = fallData.angles || {};
+            
+            return `
+                <tr>
+                    <td class="font-mono">${a.id || 'N/A'}</td>
+                    <td>
+                        ${a.patientName || 'Unknown'}<br>
+                        <span class="text-xs text-gray-500">${a.patientToken || ''}</span>
+                    </td>
+                    <td>
+                        <div class="fall-data">
+                            <strong>Impact:</strong> ${fallData.accMagnitude ? fallData.accMagnitude.toFixed(2) + 'g' : 'N/A'}<br>
+                            <strong>Message:</strong> ${a.message || 'Fall detected'}
+                        </div>
+                    </td>
+                    <td>
+                        ${a.location ? 
+                            `Lat: ${a.location.lat?.toFixed(4) || '--'}<br>Lng: ${a.location.lng?.toFixed(4) || '--'}` : 
+                            'Location unknown'}
+                    </td>
+                    <td>
+                        X: ${angles.angleX ? angles.angleX.toFixed(1) + '°' : '--'}<br>
+                        Y: ${angles.angleY ? angles.angleY.toFixed(1) + '°' : '--'}<br>
+                        Z: ${angles.angleZ ? angles.angleZ.toFixed(1) + '°' : '--'}
+                    </td>
+                    <td>${a.timestamp ? new Date(a.timestamp).toLocaleString() : 'Unknown'}</td>
+                    <td><span class="badge badge-fall">FALL DETECTED</span></td>
+                    <td>
+                        <button onclick="resolveAlert('${a.id}')" class="text-green-600 hover:text-green-800" title="Resolve Alert">
+                            <i class="fas fa-check-circle"></i>
+                        </button>
+                    </td>
+                </tr>
+            `;
+        }).join('');
+    }
+
+    async function resolveAlert(alertId) {
+        if (!confirm(`Resolve alert ${alertId}?`)) return;
+        
+        try {
+            const response = await fetch(`/api/admin/resolve-alert/${alertId}`, {
+                method: 'POST',
+                headers: {
+                    'x-session-token': getCookie('sessionToken') || ''
+                }
+            });
+            
+            const data = await response.json();
+            
+            if (data.success) {
+                showNotification('Alert resolved', 'success');
+                loadEmergencyAlerts();
+                loadFallAlerts();
+                loadESP32Devices();
+            } else {
+                showNotification(data.error || 'Failed to resolve alert', 'error');
+            }
+        } catch (error) {
+            console.error('Error resolving alert:', error);
+            showNotification('Network error', 'error');
+        }
+    }
+
+    // ==================== HOSPITALS ====================
+
+    async function loadHospitalsList() {
+        try {
+            const response = await fetch('/api/hospitals');
+            const data = await response.json();
+            
+            if (data.success) {
+                updateHospitalsDisplay(data.hospitals);
+            }
+        } catch (error) {
+            console.error('Error loading hospitals:', error);
+        }
+    }
+
+    function updateHospitalsDisplay(hospitals) {
+        const container = document.getElementById('hospitalsList');
+        
+        if (!hospitals || hospitals.length === 0) {
+            container.innerHTML = '<p class="text-gray-500 text-center py-4">No hospitals found</p>';
+            return;
+        }
+        
+        container.innerHTML = hospitals.map(h => `
+            <div class="device-card">
+                <div class="font-semibold text-lg">${h.name}</div>
+                <p class="text-sm text-gray-600">${h.locality || ''}</p>
+                <p class="text-xs text-gray-500 mt-1">${h.address || ''}</p>
+                <div class="flex justify-between mt-2 text-sm">
+                    <span><i class="fas fa-user-md mr-1 text-blue-600"></i>${h.doctors || 0} doctors</span>
+                    <span><i class="fas fa-phone-alt mr-1 text-green-600"></i>${h.contact || 'N/A'}</span>
+                </div>
+                <div class="flex justify-between mt-1 text-xs">
+                    <span class="bg-red-100 text-red-800 px-2 py-1 rounded">Priority: ${h.severitySlots || 10}</span>
+                    <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded">Normal: ${h.normalSlots || 50}</span>
+                </div>
+                <div class="mt-2 flex flex-wrap gap-1">
+                    ${(h.specialties || []).slice(0, 3).map(s => 
+                        `<span class="text-xs bg-gray-100 px-2 py-1 rounded">${s}</span>`
+                    ).join('')}
+                </div>
+            </div>
+        `).join('');
+    }
+
+    // ==================== NOTIFICATIONS ====================
+
+    function showNotification(message, type = 'success') {
+        const notification = document.createElement('div');
+        notification.className = `fixed top-4 right-4 p-4 rounded-lg text-white ${type === 'success' ? 'bg-green-500' : 'bg-red-500'} shadow-lg z-50 animate-fade-in`;
+        notification.innerHTML = `
+            <div class="flex items-center">
+                <i class="fas ${type === 'success' ? 'fa-check-circle' : 'fa-exclamation-circle'} mr-2"></i>
+                <span>${message}</span>
+            </div>
+        `;
+        
+        document.body.appendChild(notification);
+        
+        setTimeout(() => {
+            notification.remove();
+        }, 3000);
+    }
+
+    // ==================== ANALYTICS ====================
+
+    let severityChart, flowChart;
+
+    function initializeCharts() {
+        // Severity Chart
+        const severityCtx = document.getElementById('severityChart').getContext('2d');
+        
+        if (severityChart) severityChart.destroy();
+        
+        severityChart = new Chart(severityCtx, {
+            type: 'doughnut',
+            data: {
+                labels: ['Critical', 'Urgent', 'Moderate', 'Mild'],
+                datasets: [{
+                    data: [
+                        parseInt(document.getElementById('criticalCount').textContent) || 0,
+                        parseInt(document.getElementById('urgentCount').textContent) || 0,
+                        parseInt(document.getElementById('moderateCount').textContent) || 0,
+                        parseInt(document.getElementById('mildCount').textContent) || 0
+                    ],
+                    backgroundColor: ['#dc2626', '#f59e0b', '#3b82f6', '#10b981']
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false
+            }
+        });
+
+        // Flow Chart
+        const flowCtx = document.getElementById('flowChart').getContext('2d');
+        
+        if (flowChart) flowChart.destroy();
+        
+        flowChart = new Chart(flowCtx, {
+            type: 'line',
+            data: {
+                labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+                datasets: [{
+                    label: 'Patients',
+                    data: [12, 19, 15, 17, 24, 13, 8],
+                    borderColor: '#3b82f6',
+                    backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                    tension: 0.4
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false
+            }
+        });
+    }
+
+    // Auto-refresh every 10 seconds
+    setInterval(() => {
+        loadQueueData();
+        loadESP32Devices();
+        loadEmergencyAlerts();
+        loadFallAlerts();
+    }, 10000);
+</script>
+</body>
+</html>

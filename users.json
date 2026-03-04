@@ -1,0 +1,26 @@
+[
+  {
+    "id": 1,
+    "username": "admin",
+    "password": "$2b$10$cDYz1Bz91mOk2w0z5wmvHeoTOqMjLshadPdx1UntrwDcJzAjUg5fi",
+    "name": "System Administrator",
+    "role": "admin",
+    "createdAt": "2025-09-20T11:13:52.294Z"
+  },
+  {
+    "id": 2,
+    "username": "Krishna415",
+    "password": "$2b$10$/KxJBxyuhsGp.jJnp.da1ucvrT6wV.zwMe8uUeKrPBTVEtPrsGo8u",
+    "name": "Krishna Karthik",
+    "role": "admin",
+    "createdAt": "2025-09-20T13:13:48.783Z"
+  },
+  {
+    "id": 3,
+    "username": "Karthik415",
+    "password": "$2b$10$mJJ2t3rEWWI4C6yzbvZsUeso6astVJ3I9R31F2VcYtI9cp4xUUehq",
+    "name": "Krishna",
+    "role": "admin",
+    "createdAt": "2025-09-20T13:14:21.468Z"
+  }
+]

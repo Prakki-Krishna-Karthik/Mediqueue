@@ -1,0 +1,60 @@
+{
+  "devices": [
+    {
+      "deviceId": "DEV-226A3957",
+      "patientToken": "S-8-001",
+      "patientName": "saketh",
+      "deviceName": "ESP32 Emergency Button",
+      "apiKey": "ESP-4AD97A1DE08254235E5E04DDF07BF9DF",
+      "registeredAt": "2026-02-25T17:17:32.447Z",
+      "lastSeen": "2026-03-03T09:32:01.696Z",
+      "isActive": true,
+      "emergencyMode": true,
+      "battery": 100,
+      "healthReadings": [],
+      "lastEmergency": "2026-03-03T09:32:01.696Z"
+    },
+    {
+      "deviceId": "DEV-05C47004",
+      "patientToken": "S-7-002",
+      "patientName": "karthik",
+      "deviceName": "ESP32 Monitor",
+      "apiKey": "ESP-E34219BB267FAE9AC38F1B627A3021BE",
+      "registeredAt": "2026-02-25T19:07:17.135Z",
+      "lastSeen": "2026-02-25T19:13:37.417Z",
+      "isActive": true,
+      "emergencyMode": false,
+      "battery": 100,
+      "healthReadings": [],
+      "lastEmergency": "2026-02-25T19:13:37.417Z"
+    },
+    {
+      "deviceId": "DEV-709C8F91",
+      "patientToken": "S-1-002",
+      "patientName": "saketh",
+      "deviceName": "ESP32 Monitor",
+      "apiKey": "ESP-EFE64F4B3EDD4B03CA89DE827A7AE9CA",
+      "registeredAt": "2026-02-25T19:15:07.972Z",
+      "lastSeen": "2026-02-25T19:15:24.063Z",
+      "isActive": true,
+      "emergencyMode": false,
+      "battery": 100,
+      "healthReadings": [],
+      "lastEmergency": "2026-02-25T19:15:24.063Z"
+    },
+    {
+      "deviceId": "DEV-7A01B4F7",
+      "patientToken": "S-1-001",
+      "patientName": "karthik",
+      "deviceName": "ESP32 Monitor",
+      "apiKey": "ESP-061CA3B2EBCEAB440FBF52F3D9CFE05A",
+      "registeredAt": "2026-03-02T13:53:14.842Z",
+      "lastSeen": "2026-03-02T14:22:53.550Z",
+      "isActive": true,
+      "emergencyMode": false,
+      "battery": 100,
+      "healthReadings": [],
+      "lastEmergency": "2026-03-02T14:22:53.550Z"
+    }
+  ]
+}

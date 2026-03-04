@@ -1,0 +1,39 @@
+graph TD
+    A[Patient] -->|Register/Login| B[Patient Portal]
+    B -->|Book Appointment| C[Queue Management System]
+    C -->|Store Data| D[(Cloud Database)]
+    C -->|Send Notifications| E[SMS Gateway]
+    E -->|SMS Alert| A
+    
+    F[Doctor/Admin] -->|Login| G[Admin Portal]
+    G -->|Manage Queue| C
+    G -->|View Statistics| H[Analytics Module]
+    H -->|Fetch Data| D
+    
+    C -->|Real-time Updates| I[WebSocket Server]
+    I -->|Queue Status| B
+    I -->|Queue Status| G
+    
+    J[Walk-in Patient] -->|Register at Desk| K[Reception Staff]
+    K -->|Add to Queue| G
+    
+    subgraph "Cloud Services"
+        D
+        L[Authentication Service]
+        M[File Storage]
+    end
+    
+    B -->|Authenticate| L
+    G -->|Authenticate| L
+    C -->|Store Documents| M
+    
+    classDef frontend fill:#f9f,stroke:#333,stroke-width:2px
+    classDef backend fill:#bbf,stroke:#333,stroke-width:2px
+    classDef database fill:#bfb,stroke:#333,stroke-width:2px
+    classDef external fill:#fbb,stroke:#333,stroke-width:2px
+    
+    class A,F,J external
+    class B,G frontend
+    class C,H,I backend
+    class D,L,M database
+    class E,K external

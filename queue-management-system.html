@@ -1,0 +1,1283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MediQueue Chennai - AI Powered Smart Healthcare with ESP32 Integration</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* Base Styles */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body { 
+            background-color: #f3f4f6;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+        }
+        
+        .status-waiting { color: #eab308; font-weight: 500; }
+        .status-completed { color: #22c55e; font-weight: 500; }
+        .token-card { transition: all 0.3s ease; }
+        .token-card:hover { transform: translateY(-2px); box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1); }
+        
+        .notification { 
+            position: fixed; top: 20px; right: 20px; padding: 15px 20px; border-radius: 8px; color: white; z-index: 1000; 
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); transform: translateX(100%); transition: transform 0.3s ease-out; 
+        }
+        .notification.show { transform: translateX(0); }
+        .notification.success { background-color: #10b981; }
+        .notification.error { background-color: #ef4444; }
+        .notification.info { background-color: #3b82f6; }
+        .notification.warning { background-color: #f97316; }
+        
+        .queue-item { transition: background-color 0.3s; }
+        .queue-item-highlight { background-color: #f0f9ff; animation: pulse 2s infinite; }
+        
+        @keyframes pulse { 
+            0% { background-color: #f0f9ff; } 50% { background-color: #e0f2fe; } 100% { background-color: #f0f9ff; } 
+        }
+        
+        .severity-token { border-left: 4px solid #ef4444; background-color: #fef2f2; }
+        .normal-token { border-left: 4px solid #3b82f6; }
+        
+        .hospital-card { transition: all 0.3s ease; cursor: pointer; }
+        .hospital-card:hover { transform: translateY(-2px); box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1); }
+        .hospital-card.selected { border: 2px solid #3b82f6; background-color: #f0f9ff; }
+        
+        .slot-info { background: #f8fafc; border-radius: 8px; padding: 15px; margin: 10px 0; }
+        .priority-slot { border-left: 4px solid #ef4444; background: #fef2f2; padding: 10px; }
+        .normal-slot { border-left: 4px solid #3b82f6; background: #f0f9ff; padding: 10px; }
+        
+        .form-input:invalid { border-color: #ef4444; }
+        .form-input:valid { border-color: #10b981; }
+        
+        .doctor-info { background: #f0f9ff; border-radius: 8px; padding: 10px; margin-top: 5px; font-size: 0.875rem; }
+        
+        .ai-analysis-critical { border-left: 4px solid #ef4444; background: linear-gradient(135deg, #fef2f2 0%, #fee2e2 100%); }
+        .ai-analysis-urgent { border-left: 4px solid #f59e0b; background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%); }
+        .ai-analysis-moderate { border-left: 4px solid #3b82f6; background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%); }
+        .ai-analysis-mild { border-left: 4px solid #10b981; background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%); }
+        
+        .confidence-bar { height: 6px; background: #e5e7eb; border-radius: 3px; overflow: hidden; }
+        .confidence-fill { height: 100%; background: linear-gradient(90deg, #10b981, #3b82f6); transition: width 0.5s ease; }
+        
+        .estimated-time-badge { background: #f3f4f6; border-radius: 4px; padding: 2px 6px; font-size: 0.75rem; }
+        .travel-info-card { background: #f0f9ff; border-radius: 8px; padding: 10px; margin-top: 10px; border: 1px solid #bae6fd; }
+        .peak-hour-badge { background: #fef3c7; color: #92400e; padding: 2px 8px; border-radius: 12px; font-size: 0.7rem; }
+        
+        .emergency-alert { animation: blink 1s infinite; background: #fee2e2; border: 2px solid #ef4444; }
+        .fall-alert { animation: blink 1s infinite; background: #fff7ed; border: 2px solid #f97316; }
+        
+        @keyframes blink { 0% { opacity: 1; } 50% { opacity: 0.6; } 100% { opacity: 1; } }
+        
+        .fingerprint-icon { color: #6b7280; transition: color 0.3s; }
+        .fingerprint-icon:hover { color: #3b82f6; cursor: pointer; }
+        
+        .health-reading-normal { color: #10b981; }
+        .health-reading-warning { color: #f59e0b; animation: pulse 1s infinite; }
+        .health-reading-critical { color: #ef4444; animation: blink 1s infinite; }
+        
+        .device-card { border: 1px solid #e5e7eb; border-radius: 8px; padding: 12px; transition: all 0.3s; }
+        .device-card:hover { box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); }
+        
+        .location-marker { display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin-right: 5px; }
+        .location-marker.online { background-color: #10b981; animation: pulse 1.5s infinite; }
+        .location-marker.offline { background-color: #9ca3af; }
+        .location-marker.emergency { background-color: #dc2626; animation: blink 1s infinite; }
+        .location-marker.fall { background-color: #f97316; animation: blink 1s infinite; }
+        
+        .slot-timeline { position: relative; padding: 20px 0; }
+        .slot-marker { position: absolute; width: 12px; height: 12px; background: #3b82f6; border-radius: 50%; transform: translateX(-50%); }
+        .slot-marker.priority { background: #ef4444; }
+        .slot-marker.current { background: #10b981; transform: scale(1.5); }
+        
+        .chennai-badge { background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%); color: white; padding: 4px 12px; border-radius: 20px; font-size: 0.8rem; }
+        .distance-indicator { font-size: 0.8rem; color: #6b7280; }
+        .eta-countdown { font-weight: bold; color: #059669; }
+        
+        /* Fall Detection Badge */
+        .fall-badge {
+            background: #f97316;
+            color: white;
+            font-size: 0.6rem;
+            padding: 2px 6px;
+            border-radius: 12px;
+            margin-left: 4px;
+        }
+        
+        /* Fix for spacing */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 1rem;
+        }
+        
+        /* Responsive fixes */
+        @media (max-width: 1024px) {
+            .grid-cols-1.lg\:grid-cols-3 {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        /* Navigation positioning based on banners */
+        #mainNav {
+            transition: top 0.3s ease;
+        }
+        
+        body.has-fall-banner #mainNav {
+            top: 80px;
+        }
+        
+        body.has-emergency-banner #mainNav {
+            top: 40px;
+        }
+        
+        body.has-fall-banner.has-emergency-banner #mainNav {
+            top: 120px;
+        }
+    </style>
+</head>
+<body class="bg-gray-100">
+    <!-- Emergency Alert Banner -->
+    <div id="emergencyBanner" class="hidden bg-red-600 text-white p-2 text-center fixed top-0 left-0 right-0 z-50 animate-pulse">
+        <i class="fas fa-exclamation-triangle mr-2"></i>
+        <span id="emergencyCount">0</span> Active Emergency Alerts - Check Admin Panel
+    </div>
+
+    <!-- Fall Detection Banner -->
+    <div id="fallBanner" class="hidden bg-orange-500 text-white p-2 text-center fixed top-8 left-0 right-0 z-50 animate-pulse">
+        <i class="fas fa-exclamation-triangle mr-2"></i>
+        <span id="fallCount">0</span> Active Fall Detections - Immediate Attention Required
+    </div>
+
+    <!-- Navigation -->
+    <nav class="bg-gradient-to-r from-blue-800 to-purple-800 text-white shadow-md sticky z-40" id="mainNav">
+        <div class="container mx-auto px-4 py-2 flex justify-between items-center">
+            <div class="flex items-center">
+                <i class="fas fa-hospital-user text-2xl mr-3"></i>
+                <h1 class="text-xl font-bold">MediQueue Chennai</h1>
+                <span class="chennai-badge ml-3 text-xs"><i class="fas fa-map-marker-alt mr-1"></i>Chennai</span>
+            </div>
+            <div class="flex items-center space-x-3">
+                <span id="currentDate" class="text-blue-100 text-sm hidden md:inline"></span>
+                <div class="flex items-center bg-blue-700 px-2 py-1 rounded-full text-xs">
+                    <i class="fas fa-brain mr-1"></i>
+                    <span id="aiStatus">AI Active</span>
+                </div>
+                <div class="flex items-center bg-purple-700 px-2 py-1 rounded-full text-xs">
+                    <i class="fas fa-microchip mr-1"></i>
+                    <span id="esp32Status">ESP32 <span id="activeDevicesCount">0</span></span>
+                </div>
+                <button id="adminBtn" class="bg-white text-blue-800 px-3 py-1 rounded-md text-sm font-semibold">
+                    <i class="fas fa-user-cog mr-1"></i>Admin
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mx-auto px-4 py-4">
+        <!-- AI Status Banner - Compact -->
+        <div class="bg-gradient-to-r from-purple-600 to-blue-600 text-white rounded-lg p-3 mb-4 shadow-lg">
+            <div class="flex items-center justify-between flex-wrap">
+                <div class="flex items-center">
+                    <i class="fas fa-robot text-2xl mr-2"></i>
+                    <div>
+                        <h3 class="font-bold text-base">AI Symptom Analyzer</h3>
+                        <p class="text-blue-100 text-xs">8 Hospitals • 30+ Specialists • 5-min Slots</p>
+                    </div>
+                </div>
+                <div class="flex space-x-3 text-sm">
+                    <div><span class="font-bold" id="totalHospitals">8</span> <span class="text-xs">Hospitals</span></div>
+                    <div><span class="font-bold" id="activeDoctors">30+</span> <span class="text-xs">Doctors</span></div>
+                    <div><span class="font-bold" id="todayPatients">0</span> <span class="text-xs">Today</span></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Grid - Adjusted spacing -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
+            <!-- Left Column - Hospital Selection & Booking -->
+            <div class="lg:col-span-2 space-y-4">
+                <!-- Hospital Selection Card -->
+                <div class="bg-white rounded-lg shadow-lg p-4">
+                    <h2 class="text-xl font-bold mb-3 text-gray-800">
+                        <i class="fas fa-map-marked-alt text-blue-600 mr-2"></i>
+                        Select Hospital
+                    </h2>
+                    
+                    <div class="mb-3">
+                        <select id="locality" class="w-full p-2 border border-gray-300 rounded-md text-sm">
+                            <option value="">All Chennai Localities</option>
+                        </select>
+                    </div>
+
+                    <!-- Hospital Grid -->
+                    <div id="hospitalGrid" class="grid grid-cols-1 md:grid-cols-2 gap-2 max-h-60 overflow-y-auto p-1">
+                        <!-- Hospitals will be populated here -->
+                    </div>
+
+                    <!-- Selected Hospital Details -->
+                    <div id="selectedHospitalDetails" class="mt-3 p-3 bg-blue-50 rounded-lg hidden">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <h3 id="selectedHospitalName" class="font-bold text-base"></h3>
+                                <p id="selectedHospitalAddress" class="text-xs text-gray-600"></p>
+                            </div>
+                        </div>
+                        
+                        <div class="grid grid-cols-2 gap-2 mt-2 text-xs">
+                            <div><i class="fas fa-phone-alt mr-1 text-blue-600"></i> <span id="selectedHospitalPhone"></span></div>
+                            <div><i class="fas fa-clock mr-1 text-blue-600"></i> <span id="selectedHospitalSlots"></span></div>
+                        </div>
+
+                        <!-- 5-Minute Slot Timeline -->
+                        <div class="mt-2">
+                            <div class="flex h-2 bg-gray-200 rounded-full overflow-hidden">
+                                <div id="prioritySlotFill" class="h-full bg-red-500" style="width: 28.5%"></div>
+                                <div id="normalSlotFill" class="h-full bg-blue-500" style="width: 71.5%"></div>
+                            </div>
+                            <div class="flex justify-between text-xs mt-1">
+                                <span><span class="w-2 h-2 bg-red-500 rounded-full inline-block mr-1"></span>2 Priority</span>
+                                <span><span class="w-2 h-2 bg-blue-500 rounded-full inline-block mr-1"></span>5 Normal</span>
+                            </div>
+                        </div>
+
+                        <!-- Available Doctors -->
+                        <div class="mt-2">
+                            <h4 class="font-semibold text-xs mb-1">Available Doctors</h4>
+                            <div id="availableDoctors" class="grid grid-cols-2 gap-1 text-xs">
+                                <!-- Doctors will be populated here -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Appointment Booking Card -->
+                <div class="bg-white rounded-lg shadow-lg p-4">
+                    <h2 class="text-xl font-bold mb-3 text-gray-800">
+                        <i class="fas fa-calendar-check text-green-600 mr-2"></i>
+                        Book Appointment
+                    </h2>
+                    
+                    <form id="appointmentForm">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                            <div>
+                                <input type="text" id="patientName" placeholder="Full Name *" class="w-full p-2 border rounded-md text-sm" required>
+                            </div>
+                            <div>
+                                <input type="tel" id="mobileNumber" placeholder="Mobile *" class="w-full p-2 border rounded-md text-sm" pattern="[0-9]{10}" required>
+                            </div>
+                            <div class="md:col-span-2">
+                                <textarea id="symptoms" rows="2" placeholder="Describe symptoms (AI will analyze) *" class="w-full p-2 border rounded-md text-sm" required></textarea>
+                            </div>
+                            <div>
+                                <input type="date" id="appointmentDate" class="w-full p-2 border rounded-md text-sm" required>
+                            </div>
+                            <div>
+                                <button type="button" id="getLocationBtn" class="w-full bg-gray-100 p-2 border rounded-md text-sm">
+                                    <i class="fas fa-location-arrow mr-1"></i>Use My Location
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- AI Analysis Result -->
+                        <div id="aiAnalysisBox" class="mt-3 p-3 rounded-lg hidden">
+                            <div class="flex items-center justify-between text-sm">
+                                <h4 class="font-semibold"><i class="fas fa-robot mr-1"></i>AI Analysis</h4>
+                                <span id="aiConfidence" class="text-xs"></span>
+                            </div>
+                            <div class="confidence-bar mt-1">
+                                <div id="confidenceFill" class="confidence-fill" style="width: 0%"></div>
+                            </div>
+                            <p id="aiSeverity" class="font-bold text-sm mt-1"></p>
+                            <p id="aiExplanation" class="text-xs text-gray-600"></p>
+                        </div>
+
+                        <!-- Travel Time Estimate -->
+                        <div id="travelEstimateBox" class="mt-3 travel-info-card hidden">
+                            <h4 class="font-semibold text-sm"><i class="fas fa-car mr-1 text-blue-600"></i>Travel Info</h4>
+                            <div class="grid grid-cols-2 gap-1 text-xs mt-1">
+                                <div>Distance: <span id="travelDistance">0</span> km</div>
+                                <div>Time: <span id="travelTime">0</span> mins</div>
+                                <div class="col-span-2">Leave by: <span id="departureTime" class="font-bold text-green-600"></span></div>
+                            </div>
+                        </div>
+
+                        <button type="submit" id="submitBtn" class="w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white p-2 rounded-md font-semibold text-sm mt-3" disabled>
+                            <i class="fas fa-calendar-plus mr-1"></i>Book Appointment
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Right Column - Live Queue & ESP32 Status -->
+            <div class="space-y-4">
+                <!-- Live Queue Status -->
+                <div class="bg-white rounded-lg shadow-lg p-4">
+                    <h2 class="text-lg font-bold mb-3 flex items-center">
+                        <i class="fas fa-users text-blue-600 mr-2"></i>
+                        Live Queue
+                        <span class="ml-auto text-xs bg-green-100 text-green-800 px-2 py-1 rounded-full">
+                            <i class="fas fa-sync-alt fa-spin mr-1"></i>Live
+                        </span>
+                    </h2>
+
+                    <!-- Queue Stats - Compact -->
+                    <div class="grid grid-cols-4 gap-1 mb-3">
+                        <div class="bg-blue-50 p-2 rounded text-center">
+                            <div class="text-lg font-bold text-blue-600" id="totalWaiting">0</div>
+                            <div class="text-xs">Waiting</div>
+                        </div>
+                        <div class="bg-yellow-50 p-2 rounded text-center">
+                            <div class="text-lg font-bold text-yellow-600" id="totalPriority">0</div>
+                            <div class="text-xs">Priority</div>
+                        </div>
+                        <div class="bg-green-50 p-2 rounded text-center">
+                            <div class="text-lg font-bold text-green-600" id="totalCompleted">0</div>
+                            <div class="text-xs">Done</div>
+                        </div>
+                        <div class="bg-purple-50 p-2 rounded text-center">
+                            <div class="text-lg font-bold text-purple-600" id="totalDoctors">0</div>
+                            <div class="text-xs">Doctors</div>
+                        </div>
+                    </div>
+
+                    <!-- Queue List - Scrollable -->
+                    <div id="queueList" class="space-y-2 max-h-48 overflow-y-auto text-sm">
+                        <!-- Queue items will be populated here -->
+                    </div>
+                </div>
+
+                <!-- ESP32 Patient Devices Status - DYNAMIC (Only shows when devices exist) -->
+                <div class="bg-white rounded-lg shadow-lg p-4">
+                    <h2 class="text-lg font-bold mb-3 flex items-center">
+                        <i class="fas fa-microchip text-purple-600 mr-2"></i>
+                        Active Patient Devices
+                        <span class="ml-auto text-xs bg-purple-100 text-purple-800 px-2 py-1 rounded-full" id="deviceCountBadge" style="display: none;">
+                            <span id="activeDevices">0</span> Online
+                        </span>
+                    </h2>
+
+                    <!-- Empty State - Shown when no devices -->
+                    <div id="noDevicesMessage" class="text-center py-6 text-gray-500">
+                        <i class="fas fa-microchip text-3xl mb-2 text-gray-300"></i>
+                        <p class="text-sm">No ESP32 devices connected</p>
+                        <p class="text-xs mt-1">Devices will appear here when patients register</p>
+                    </div>
+
+                    <!-- Devices Container - Hidden by default -->
+                    <div id="activeDevicesList" class="space-y-2 max-h-48 overflow-y-auto hidden">
+                        <!-- REAL devices will be populated from server ONLY when they exist -->
+                    </div>
+
+                    <!-- Emergency Demo Button - Always visible for testing -->
+                    <div class="mt-3 p-2 bg-red-50 rounded-lg border border-red-200">
+                        <p class="text-xs text-gray-600 mb-2">Test emergency alert with fingerprint</p>
+                        <button id="demoEmergencyBtn" class="w-full bg-red-600 text-white p-2 rounded-md text-xs">
+                            <i class="fas fa-fingerprint mr-1"></i>Trigger Emergency (Demo)
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Recent Health Readings - Only shows when devices exist -->
+                <div class="bg-white rounded-lg shadow-lg p-4" id="healthReadingsSection" style="display: none;">
+                    <h2 class="text-lg font-bold mb-3 flex items-center">
+                        <i class="fas fa-heartbeat text-red-600 mr-2"></i>
+                        Recent Health Readings
+                    </h2>
+                    <div id="healthReadings" class="space-y-1 max-h-32 overflow-y-auto text-xs">
+                        <!-- Health readings will be populated ONLY when devices exist -->
+                    </div>
+                </div>
+
+                <!-- Fall Detection Status (Always visible) -->
+                <div class="bg-white rounded-lg shadow-lg p-4">
+                    <h2 class="text-lg font-bold mb-3 flex items-center">
+                        <i class="fas fa-exclamation-triangle text-orange-600 mr-2"></i>
+                        Fall Detection Status
+                    </h2>
+                    <div class="text-xs space-y-2">
+                        <div class="flex justify-between">
+                            <span>Active Fall Alerts:</span>
+                            <span class="font-bold text-orange-600" id="fallAlertsCount">0</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span>Devices with Fall Detection:</span>
+                            <span class="font-bold" id="fallDevicesCount">0</span>
+                        </div>
+                        <div class="bg-orange-50 p-2 rounded-lg mt-2">
+                            <p class="text-orange-800">
+                                <i class="fas fa-info-circle mr-1"></i>
+                                Fall detection automatically alerts staff when a patient falls
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Chennai Hospital Network Preview -->
+        <div class="mt-4 bg-white rounded-lg shadow-lg p-3">
+            <h3 class="font-semibold text-sm mb-2">Chennai Hospital Network</h3>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-1 text-xs">
+                <div class="flex items-center"><span class="w-2 h-2 bg-red-500 rounded-full mr-1"></span>Apollo</div>
+                <div class="flex items-center"><span class="w-2 h-2 bg-blue-500 rounded-full mr-1"></span>MIOT</div>
+                <div class="flex items-center"><span class="w-2 h-2 bg-green-500 rounded-full mr-1"></span>Fortis</div>
+                <div class="flex items-center"><span class="w-2 h-2 bg-yellow-500 rounded-full mr-1"></span>Kauvery</div>
+                <div class="flex items-center"><span class="w-2 h-2 bg-purple-500 rounded-full mr-1"></span>Billroth</div>
+                <div class="flex items-center"><span class="w-2 h-2 bg-pink-500 rounded-full mr-1"></span>SRM</div>
+                <div class="flex items-center"><span class="w-2 h-2 bg-indigo-500 rounded-full mr-1"></span>Global</div>
+                <div class="flex items-center"><span class="w-2 h-2 bg-teal-500 rounded-full mr-1"></span>Chettinad</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Token Display Modal -->
+    <div id="tokenModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
+        <div class="bg-white rounded-lg p-4 max-w-sm w-full mx-4">
+            <div class="text-center">
+                <i class="fas fa-check-circle text-green-500 text-4xl mb-2"></i>
+                <h3 class="text-xl font-bold mb-2">Appointment Booked!</h3>
+                <div class="bg-gray-50 p-3 rounded-lg mb-3">
+                    <p class="text-2xl font-bold text-blue-600" id="modalToken"></p>
+                    <p class="font-semibold text-sm mt-1" id="modalPatientName"></p>
+                    <p class="text-xs text-gray-600" id="modalHospital"></p>
+                    <div class="flex justify-center space-x-2 mt-2 text-xs">
+                        <span class="bg-red-100 text-red-800 px-2 py-1 rounded-full" id="modalType"></span>
+                        <span class="bg-green-100 text-green-800 px-2 py-1 rounded-full" id="modalTime"></span>
+                    </div>
+                    
+                    <div class="mt-2 p-2 bg-blue-50 rounded-lg text-xs">
+                        <p>Estimated Start: <span class="font-bold text-blue-600" id="modalEstimatedTime"></span></p>
+                    </div>
+
+                    <div id="modalTravelInfo" class="mt-2 text-xs hidden">
+                        <p><i class="fas fa-car mr-1"></i> <span id="modalTravelTime"></span></p>
+                    </div>
+
+                    <div id="modalAIAnalysis" class="mt-2 text-xs p-2 rounded-lg"></div>
+                </div>
+                <div class="flex space-x-2">
+                    <button id="closeModal" class="flex-1 bg-blue-600 text-white px-3 py-2 rounded-md text-sm">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Fingerprint Authentication Modal -->
+    <div id="fingerprintModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
+        <div class="bg-white rounded-lg p-4 max-w-xs w-full mx-4">
+            <div class="text-center">
+                <i class="fas fa-fingerprint text-5xl text-blue-600 mb-3"></i>
+                <h3 class="text-lg font-bold mb-2">Fingerprint Auth</h3>
+                <p class="text-xs text-gray-600 mb-3">Place finger on R503 sensor</p>
+                <div class="animate-pulse mb-3">
+                    <i class="fas fa-hand-point-up text-3xl text-gray-400"></i>
+                </div>
+                <div class="flex space-x-2">
+                    <button id="cancelFingerprint" class="flex-1 bg-gray-300 px-3 py-2 rounded-md text-sm">Cancel</button>
+                    <button id="simulateFingerprint" class="flex-1 bg-blue-600 text-white px-3 py-2 rounded-md text-sm">Simulate</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Notification Container -->
+    <div id="notificationContainer"></div>
+
+    <script>
+        // ==================== GLOBAL VARIABLES ====================
+        let currentHospital = null;
+        let currentLocation = null;
+        let aiAnalysis = null;
+        let refreshInterval;
+        let devicesRefreshInterval;
+        let emergencyAlerts = [];
+        let fallAlerts = [];
+
+        // Chennai Hospitals Data
+        const CHENNAI_HOSPITALS = [
+            {
+                id: 1,
+                name: "Apollo Hospitals - Greams Road",
+                locality: "Greams Road",
+                address: "21, Greams Lane, Greams Road, Chennai - 600006",
+                coordinates: { lat: 13.0649, lng: 80.2552 },
+                phone: "+91-44-2829-3333",
+                prioritySlots: 2,
+                normalSlots: 5,
+                slotDuration: 5,
+                specialties: ["Cardiology", "Neurology", "Orthopedics"]
+            },
+            {
+                id: 2,
+                name: "MIOT International",
+                locality: "Manapakkam",
+                address: "4/112, Mount Poonamallee Road, Manapakkam, Chennai - 600089",
+                coordinates: { lat: 13.0197, lng: 80.1797 },
+                phone: "+91-44-4200-2288",
+                prioritySlots: 2,
+                normalSlots: 5,
+                slotDuration: 5,
+                specialties: ["Orthopedics", "Trauma Care", "Cardiology"]
+            },
+            {
+                id: 3,
+                name: "Fortis Malar Hospital",
+                locality: "Adyar",
+                address: "52, 1st Main Road, Gandhi Nagar, Adyar, Chennai - 600020",
+                coordinates: { lat: 13.0046, lng: 80.2491 },
+                phone: "+91-44-4289-2222",
+                prioritySlots: 2,
+                normalSlots: 5,
+                slotDuration: 5,
+                specialties: ["Cardiology", "Gastroenterology", "Nephrology"]
+            },
+            {
+                id: 4,
+                name: "Kauvery Hospital",
+                locality: "Alwarpet",
+                address: "81, Dr Radhakrishnan Salai, Alwarpet, Chennai - 600004",
+                coordinates: { lat: 13.0385, lng: 80.2549 },
+                phone: "+91-44-4000-6000",
+                prioritySlots: 2,
+                normalSlots: 5,
+                slotDuration: 5,
+                specialties: ["Cardiology", "Pulmonology", "Critical Care"]
+            },
+            {
+                id: 5,
+                name: "Billroth Hospitals",
+                locality: "Shenoy Nagar",
+                address: "52, West Mada Church Street, Shenoy Nagar, Chennai - 600030",
+                coordinates: { lat: 13.0745, lng: 80.2249 },
+                phone: "+91-44-2615-5555",
+                prioritySlots: 2,
+                normalSlots: 5,
+                slotDuration: 5,
+                specialties: ["General Medicine", "Cardiology", "Diabetology"]
+            },
+            {
+                id: 6,
+                name: "SRM Institutes for Medical Science",
+                locality: "Vadapalani",
+                address: "No.1, Jawaharlal Nehru Road, Vadapalani, Chennai - 600026",
+                coordinates: { lat: 13.0525, lng: 80.2125 },
+                phone: "+91-44-4220-2222",
+                prioritySlots: 2,
+                normalSlots: 5,
+                slotDuration: 5,
+                specialties: ["Multi-Specialty", "Cardiology", "Neurology"]
+            },
+            {
+                id: 7,
+                name: "Global Health City",
+                locality: "Perumbakkam",
+                address: "439, Cheran Nagar, Perumbakkam, Chennai - 600100",
+                coordinates: { lat: 12.9069, lng: 80.2275 },
+                phone: "+91-44-4477-7000",
+                prioritySlots: 2,
+                normalSlots: 5,
+                slotDuration: 5,
+                specialties: ["Cardiology", "Transplant", "Oncology"]
+            },
+            {
+                id: 8,
+                name: "Chettinad Health City",
+                locality: "Kelambakkam",
+                address: "Rajiv Gandhi Salai, Kelambakkam, Chennai - 603103",
+                coordinates: { lat: 12.8193, lng: 80.2218 },
+                phone: "+91-44-4741-1000",
+                prioritySlots: 2,
+                normalSlots: 5,
+                slotDuration: 5,
+                specialties: ["Cardiology", "Orthopedics", "Neurology"]
+            }
+        ];
+
+        // Doctors data
+        const DOCTORS = [
+            { id: 1, name: "Dr. Devi Shetty", specialty: "Cardiology", hospitalId: 1, available: true },
+            { id: 2, name: "Dr. Bhuwaneshwari", specialty: "Neurology", hospitalId: 1, available: true },
+            { id: 3, name: "Dr. S. Rajasekaran", specialty: "Orthopedics", hospitalId: 1, available: true },
+            { id: 4, name: "Dr. P.V.A. Mohandas", specialty: "Orthopedics", hospitalId: 2, available: true },
+            { id: 5, name: "Dr. V. Bashi", specialty: "Cardiology", hospitalId: 2, available: true },
+            { id: 6, name: "Dr. C.N. Mani", specialty: "Cardiology", hospitalId: 3, available: true },
+            { id: 7, name: "Dr. A. Duraisamy", specialty: "Cardiology", hospitalId: 4, available: true },
+            { id: 8, name: "Dr. V. S. Natarajan", specialty: "General Medicine", hospitalId: 5, available: true },
+            { id: 9, name: "Dr. R. Balaji", specialty: "Cardiology", hospitalId: 6, available: true },
+            { id: 10, name: "Dr. K. R. Balakrishnan", specialty: "Cardiology", hospitalId: 7, available: true },
+            { id: 11, name: "Dr. P. S. Rajan", specialty: "Cardiology", hospitalId: 8, available: true }
+        ];
+
+        // ==================== UTILITY FUNCTIONS ====================
+        function showNotification(message, type = 'success') {
+            const notification = document.createElement('div');
+            notification.className = `notification ${type}`;
+            notification.innerHTML = `
+                <div class="flex items-center">
+                    <i class="fas ${type === 'success' ? 'fa-check-circle' : type === 'error' ? 'fa-exclamation-triangle' : type === 'warning' ? 'fa-exclamation-triangle' : 'fa-info-circle'} mr-2"></i>
+                    <span>${message}</span>
+                </div>
+            `;
+            document.getElementById('notificationContainer').appendChild(notification);
+            setTimeout(() => notification.classList.add('show'), 100);
+            setTimeout(() => {
+                notification.classList.remove('show');
+                setTimeout(() => notification.remove(), 300);
+            }, 3000);
+        }
+
+        function formatTime(date) {
+            return new Date(date).toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit', hour12: true });
+        }
+
+        function calculateDistance(lat1, lon1, lat2, lon2) {
+            const R = 6371;
+            const dLat = (lat2 - lat1) * Math.PI / 180;
+            const dLon = (lon2 - lon1) * Math.PI / 180;
+            const a = Math.sin(dLat/2) * Math.sin(dLat/2) +
+                     Math.cos(lat1 * Math.PI/180) * Math.cos(lat2 * Math.PI/180) *
+                     Math.sin(dLon/2) * Math.sin(dLon/2);
+            const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+            return R * c;
+        }
+
+        function isPeakHour() {
+            const hour = new Date().getHours();
+            return (hour >= 8 && hour <= 10) || (hour >= 17 && hour <= 20);
+        }
+
+        function getCookie(name) {
+            const value = `; ${document.cookie}`;
+            const parts = value.split(`; ${name}=`);
+            if (parts.length === 2) return parts.pop().split(';').shift();
+        }
+
+        function getTimeAgo(date) {
+            const seconds = Math.floor((new Date() - date) / 1000);
+            
+            if (seconds < 60) return 'Just now';
+            if (seconds < 3600) return Math.floor(seconds / 60) + 'm ago';
+            if (seconds < 86400) return Math.floor(seconds / 3600) + 'h ago';
+            return Math.floor(seconds / 86400) + 'd ago';
+        }
+
+        // ==================== BANNER CONTROL FUNCTIONS ====================
+        function updateBannerClasses() {
+            const body = document.body;
+            const fallBanner = document.getElementById('fallBanner');
+            const emergencyBanner = document.getElementById('emergencyBanner');
+            
+            // Check fall banner
+            if (fallBanner && window.getComputedStyle(fallBanner).display !== 'none') {
+                body.classList.add('has-fall-banner');
+            } else {
+                body.classList.remove('has-fall-banner');
+            }
+            
+            // Check emergency banner
+            if (emergencyBanner && window.getComputedStyle(emergencyBanner).display !== 'none') {
+                body.classList.add('has-emergency-banner');
+            } else {
+                body.classList.remove('has-emergency-banner');
+            }
+        }
+
+        function showEmergencyBanner() {
+            document.getElementById('emergencyBanner').style.display = 'block';
+            updateBannerClasses();
+        }
+
+        function hideEmergencyBanner() {
+            document.getElementById('emergencyBanner').style.display = 'none';
+            updateBannerClasses();
+        }
+
+        function showFallBanner() {
+            document.getElementById('fallBanner').style.display = 'block';
+            updateBannerClasses();
+        }
+
+        function hideFallBanner() {
+            document.getElementById('fallBanner').style.display = 'none';
+            updateBannerClasses();
+        }
+
+        // ==================== INITIALIZATION ====================
+        function initializeApp() {
+            updateDate();
+            loadLocalities();
+            loadHospitals();
+            
+            // Set minimum date for appointment
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('appointmentDate').min = today;
+            document.getElementById('appointmentDate').value = today;
+
+            // Event Listeners
+            document.getElementById('getLocationBtn').addEventListener('click', getCurrentLocation);
+            document.getElementById('adminBtn').addEventListener('click', () => window.location.href = '/admin');
+            document.getElementById('closeModal').addEventListener('click', () => {
+                document.getElementById('tokenModal').classList.remove('flex');
+                document.getElementById('tokenModal').classList.add('hidden');
+            });
+            document.getElementById('cancelFingerprint').addEventListener('click', () => {
+                document.getElementById('fingerprintModal').classList.remove('flex');
+                document.getElementById('fingerprintModal').classList.add('hidden');
+            });
+            document.getElementById('simulateFingerprint').addEventListener('click', simulateEmergency);
+            document.getElementById('demoEmergencyBtn').addEventListener('click', () => {
+                document.getElementById('fingerprintModal').classList.remove('hidden');
+                document.getElementById('fingerprintModal').classList.add('flex');
+            });
+
+            document.getElementById('appointmentForm').addEventListener('submit', handleAppointmentSubmit);
+            document.getElementById('symptoms').addEventListener('input', debounce(analyzeSymptoms, 1000));
+            document.getElementById('locality').addEventListener('change', filterHospitalsByLocality);
+            
+            // Set up banner observers
+            setupBannerObservers();
+            
+            // Start live updates
+            startLiveUpdates();
+            
+            // Initial data fetch
+            fetchESP32Devices();
+            
+            // Initial banner class update
+            updateBannerClasses();
+        }
+
+        function setupBannerObservers() {
+            const observer = new MutationObserver(updateBannerClasses);
+            const fallBanner = document.getElementById('fallBanner');
+            const emergencyBanner = document.getElementById('emergencyBanner');
+
+            if (fallBanner) {
+                observer.observe(fallBanner, { attributes: true, attributeFilter: ['style', 'class'] });
+            }
+            if (emergencyBanner) {
+                observer.observe(emergencyBanner, { attributes: true, attributeFilter: ['style', 'class'] });
+            }
+        }
+
+        function updateDate() {
+            const now = new Date();
+            document.getElementById('currentDate').textContent = now.toLocaleDateString('en-IN', {
+                weekday: 'short', day: 'numeric', month: 'short'
+            });
+        }
+
+        function loadLocalities() {
+            const localities = [...new Set(CHENNAI_HOSPITALS.map(h => h.locality))].sort();
+            const select = document.getElementById('locality');
+            select.innerHTML = '<option value="">All Localities</option>' +
+                localities.map(l => `<option value="${l}">${l}</option>`).join('');
+        }
+
+        function loadHospitals() {
+            const grid = document.getElementById('hospitalGrid');
+            grid.innerHTML = CHENNAI_HOSPITALS.map(hospital => `
+                <div class="hospital-card p-2 border rounded-lg text-sm" data-id="${hospital.id}">
+                    <h3 class="font-semibold text-sm">${hospital.name}</h3>
+                    <p class="text-xs text-gray-600">${hospital.locality}</p>
+                    <div class="flex justify-between mt-1 text-xs">
+                        <span class="bg-red-100 px-1 rounded">P:2</span>
+                        <span class="bg-blue-100 px-1 rounded">N:5</span>
+                    </div>
+                </div>
+            `).join('');
+
+            document.querySelectorAll('.hospital-card').forEach(card => {
+                card.addEventListener('click', () => selectHospital(parseInt(card.dataset.id)));
+            });
+        }
+
+        function filterHospitalsByLocality() {
+            const locality = document.getElementById('locality').value;
+            document.querySelectorAll('.hospital-card').forEach(card => {
+                const hospital = CHENNAI_HOSPITALS.find(h => h.id === parseInt(card.dataset.id));
+                card.style.display = (!locality || hospital.locality === locality) ? 'block' : 'none';
+            });
+        }
+
+        function selectHospital(hospitalId) {
+            currentHospital = CHENNAI_HOSPITALS.find(h => h.id === hospitalId);
+            
+            document.querySelectorAll('.hospital-card').forEach(c => c.classList.remove('selected', 'border-blue-500'));
+            document.querySelector(`[data-id="${hospitalId}"]`).classList.add('selected', 'border-blue-500');
+            
+            document.getElementById('selectedHospitalDetails').classList.remove('hidden');
+            document.getElementById('selectedHospitalName').textContent = currentHospital.name;
+            document.getElementById('selectedHospitalAddress').textContent = currentHospital.address;
+            document.getElementById('selectedHospitalPhone').textContent = currentHospital.phone;
+            document.getElementById('selectedHospitalSlots').textContent = `5-min slots • ${currentHospital.prioritySlots + currentHospital.normalSlots}`;
+            
+            const priorityWidth = (currentHospital.prioritySlots * 5 / 35) * 100;
+            document.getElementById('prioritySlotFill').style.width = priorityWidth + '%';
+            document.getElementById('normalSlotFill').style.width = (100 - priorityWidth) + '%';
+            
+            loadDoctorsForHospital(hospitalId);
+            document.getElementById('submitBtn').disabled = false;
+            
+            if (currentLocation) updateTravelInfo();
+        }
+
+        function loadDoctorsForHospital(hospitalId) {
+            const hospitalDoctors = DOCTORS.filter(d => d.hospitalId === hospitalId && d.available);
+            const container = document.getElementById('availableDoctors');
+            container.innerHTML = hospitalDoctors.length ? 
+                hospitalDoctors.map(d => `<div class="bg-white p-1 rounded text-xs">${d.name}</div>`).join('') :
+                '<p class="text-gray-500 text-xs">No doctors available</p>';
+        }
+
+        // ==================== LOCATION SERVICES ====================
+        function getCurrentLocation() {
+            if (navigator.geolocation) {
+                showNotification('Getting location...', 'info');
+                navigator.geolocation.getCurrentPosition(
+                    position => {
+                        currentLocation = {
+                            lat: position.coords.latitude,
+                            lng: position.coords.longitude
+                        };
+                        showNotification('Location captured!', 'success');
+                        if (currentHospital) updateTravelInfo();
+                    },
+                    error => showNotification('Location failed: ' + error.message, 'error')
+                );
+            }
+        }
+
+        function updateTravelInfo() {
+            if (!currentHospital || !currentLocation) return;
+            
+            const distance = calculateDistance(
+                currentLocation.lat, currentLocation.lng,
+                currentHospital.coordinates.lat, currentHospital.coordinates.lng
+            );
+            
+            const peakHour = isPeakHour();
+            const travelTime = Math.ceil((distance / (peakHour ? 19 : 25)) * 60);
+            
+            document.getElementById('travelDistance').textContent = distance.toFixed(1);
+            document.getElementById('travelTime').textContent = travelTime;
+            
+            const appointmentTime = new Date(document.getElementById('appointmentDate').value);
+            appointmentTime.setHours(9, 0, 0);
+            const departureTime = new Date(appointmentTime.getTime() - travelTime * 60000);
+            document.getElementById('departureTime').textContent = formatTime(departureTime);
+            
+            document.getElementById('travelEstimateBox').classList.remove('hidden');
+        }
+
+        // ==================== AI SYMPTOM ANALYSIS ====================
+        async function analyzeSymptoms() {
+            const symptoms = document.getElementById('symptoms').value;
+            if (symptoms.length < 10) return;
+            
+            try {
+                const response = await fetch('/api/analyze-symptoms', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ symptoms })
+                });
+                
+                const data = await response.json();
+                if (data.success) {
+                    aiAnalysis = data.analysis;
+                    displayAIAnalysis(data.analysis);
+                }
+            } catch (error) {
+                console.error('AI analysis error:', error);
+            }
+        }
+
+        function displayAIAnalysis(analysis) {
+            const box = document.getElementById('aiAnalysisBox');
+            const category = analysis.category;
+            
+            const classes = {
+                critical: 'ai-analysis-critical', urgent: 'ai-analysis-urgent',
+                moderate: 'ai-analysis-moderate', mild: 'ai-analysis-mild'
+            };
+            
+            box.className = `mt-3 p-3 rounded-lg ${classes[category]}`;
+            box.classList.remove('hidden');
+            
+            document.getElementById('aiConfidence').textContent = `Confidence: ${(analysis.confidence * 100).toFixed(0)}%`;
+            document.getElementById('confidenceFill').style.width = (analysis.confidence * 100) + '%';
+            document.getElementById('aiSeverity').innerHTML = `<i class="fas ${analysis.isSevere ? 'fa-exclamation-triangle' : 'fa-check-circle'} mr-1"></i>${category.toUpperCase()}`;
+            document.getElementById('aiExplanation').textContent = getSeverityDescription(category);
+        }
+
+        function getSeverityDescription(category) {
+            const desc = {
+                critical: 'Emergency care needed',
+                urgent: 'Priority care needed',
+                moderate: 'Standard appointment',
+                mild: 'Routine checkup'
+            };
+            return desc[category] || '';
+        }
+
+        // ==================== APPOINTMENT BOOKING ====================
+        async function handleAppointmentSubmit(e) {
+            e.preventDefault();
+            
+            if (!currentHospital) {
+                showNotification('Please select a hospital', 'error');
+                return;
+            }
+            
+            const formData = {
+                patientName: document.getElementById('patientName').value,
+                mobileNumber: document.getElementById('mobileNumber').value,
+                hospitalId: currentHospital.id,
+                symptoms: document.getElementById('symptoms').value,
+                appointmentDate: document.getElementById('appointmentDate').value,
+                patientLocation: currentLocation
+            };
+            
+            try {
+                document.getElementById('submitBtn').disabled = true;
+                document.getElementById('submitBtn').innerHTML = '<i class="fas fa-spinner fa-spin mr-1"></i>Processing...';
+                
+                const response = await fetch('/api/add-appointment', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(formData)
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    showNotification('Appointment booked!', 'success');
+                    displayTokenModal(data.patient, data.severityAnalysis);
+                    resetForm();
+                    fetchLiveQueue();
+                } else {
+                    showNotification(data.error || 'Booking failed', 'error');
+                }
+            } catch (error) {
+                showNotification('Network error', 'error');
+            } finally {
+                document.getElementById('submitBtn').disabled = false;
+                document.getElementById('submitBtn').innerHTML = '<i class="fas fa-calendar-plus mr-1"></i>Book Appointment';
+            }
+        }
+
+        function displayTokenModal(patient, analysis) {
+            document.getElementById('modalToken').textContent = patient.token;
+            document.getElementById('modalPatientName').textContent = patient.patientName;
+            document.getElementById('modalHospital').textContent = patient.hospitalName;
+            document.getElementById('modalType').textContent = patient.isSeverity ? 'Priority' : 'Normal';
+            document.getElementById('modalTime').textContent = formatTime(patient.appointmentTime || new Date());
+            document.getElementById('modalEstimatedTime').textContent = patient.estimatedStartTimeFormatted || 'Calculating...';
+            
+            if (patient.travelInfo) {
+                document.getElementById('modalTravelInfo').classList.remove('hidden');
+                document.getElementById('modalTravelTime').textContent = 
+                    `${patient.travelInfo.distance} km • ${patient.travelInfo.minutes} mins`;
+            }
+            
+            const modalAI = document.getElementById('modalAIAnalysis');
+            modalAI.className = `mt-2 text-xs p-2 rounded-lg ai-analysis-${analysis.category}`;
+            modalAI.innerHTML = `
+                <div class="font-semibold">AI: ${analysis.category.toUpperCase()}</div>
+                <div>Score: ${(analysis.score * 100).toFixed(0)}% | Conf: ${(analysis.confidence * 100).toFixed(0)}%</div>
+            `;
+            
+            document.getElementById('tokenModal').classList.remove('hidden');
+            document.getElementById('tokenModal').classList.add('flex');
+        }
+
+        function resetForm() {
+            document.getElementById('patientName').value = '';
+            document.getElementById('mobileNumber').value = '';
+            document.getElementById('symptoms').value = '';
+            document.getElementById('aiAnalysisBox').classList.add('hidden');
+            aiAnalysis = null;
+        }
+
+        // ==================== LIVE QUEUE ====================
+        async function fetchLiveQueue() {
+            try {
+                const response = await fetch('/api/queue');
+                const data = await response.json();
+                if (data.success) updateQueueDisplay(data);
+            } catch (error) {
+                console.error('Queue fetch error:', error);
+            }
+        }
+
+        function updateQueueDisplay(data) {
+            const queue = data.queue.filter(p => p.status === 'Waiting');
+            const priorityCount = queue.filter(p => p.isSeverity).length;
+            
+            document.getElementById('totalWaiting').textContent = queue.length;
+            document.getElementById('totalPriority').textContent = priorityCount;
+            document.getElementById('totalCompleted').textContent = data.completedCount || 0;
+            document.getElementById('totalDoctors').textContent = 12;
+            document.getElementById('todayPatients').textContent = data.queue.length;
+            
+            const queueList = document.getElementById('queueList');
+            
+            if (queue.length === 0) {
+                queueList.innerHTML = '<p class="text-gray-500 text-center py-2 text-xs">No patients in queue</p>';
+                return;
+            }
+            
+            queueList.innerHTML = queue.slice(0, 4).map((patient, index) => {
+                const estimatedTime = new Date(Date.now() + (index * 5) * 60000);
+                return `
+                    <div class="queue-item p-2 rounded-lg border ${patient.isSeverity ? 'severity-token' : 'normal-token'} text-xs">
+                        <div class="flex justify-between">
+                            <span class="font-semibold">${patient.token}</span>
+                            <span class="text-xs bg-gray-100 px-1 rounded">${formatTime(estimatedTime)}</span>
+                        </div>
+                        <p class="text-xs mt-1">${patient.patientName}</p>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // ==================== ESP32 DEVICES ====================
+        async function fetchESP32Devices() {
+            try {
+                const response = await fetch('/api/patient/devices', {
+                    headers: {
+                        'x-session-token': getCookie('sessionToken') || ''
+                    }
+                });
+                
+                if (!response.ok) throw new Error('Failed to fetch');
+                
+                const data = await response.json();
+                
+                if (data.success && data.devices && data.devices.length > 0) {
+                    showRealDevices(data.devices);
+                    
+                    // Update fall detection counts
+                    const fallDevices = data.devices.filter(d => d.fallDetected).length;
+                    document.getElementById('fallDevicesCount').textContent = fallDevices;
+                    
+                    // Update fall alerts from emergency alerts
+                    fetchFallAlerts();
+                } else {
+                    showNoDevices();
+                }
+            } catch (error) {
+                console.log('No ESP32 devices connected');
+                showNoDevices();
+            }
+        }
+
+        async function fetchFallAlerts() {
+            try {
+                const response = await fetch('/api/admin/emergency-alerts', {
+                    headers: {
+                        'x-session-token': getCookie('sessionToken') || ''
+                    }
+                });
+                
+                if (!response.ok) throw new Error('Failed to fetch');
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    const fallAlerts = data.alerts.filter(a => a.type === 'fall_detected' && a.status === 'active');
+                    
+                    document.getElementById('fallAlertsCount').textContent = fallAlerts.length;
+                    
+                    if (fallAlerts.length > 0) {
+                        showFallBanner();
+                        document.getElementById('fallCount').textContent = fallAlerts.length;
+                    } else {
+                        hideFallBanner();
+                    }
+                }
+            } catch (error) {
+                console.error('Error fetching fall alerts:', error);
+            }
+        }
+
+        function showRealDevices(devices) {
+            const container = document.getElementById('activeDevicesList');
+            const noDevicesMsg = document.getElementById('noDevicesMessage');
+            const deviceBadge = document.getElementById('deviceCountBadge');
+            const healthSection = document.getElementById('healthReadingsSection');
+            
+            container.classList.remove('hidden');
+            noDevicesMsg.style.display = 'none';
+            deviceBadge.style.display = 'inline-block';
+            healthSection.style.display = 'block';
+            
+            const onlineCount = devices.filter(d => (new Date() - new Date(d.lastSeen)) < 300000).length;
+            
+            document.getElementById('activeDevices').textContent = onlineCount;
+            document.getElementById('activeDevicesCount').textContent = devices.length;
+            document.getElementById('esp32Status').innerHTML = `<i class="fas fa-wifi mr-1"></i>ESP32 ${devices.length}`;
+            
+            // Show emergency banner if any device in emergency mode
+            const emergencies = devices.filter(d => d.emergencyMode).length;
+            if (emergencies > 0) {
+                showEmergencyBanner();
+                document.getElementById('emergencyCount').textContent = emergencies;
+            } else {
+                hideEmergencyBanner();
+            }
+            
+            // Display devices
+            container.innerHTML = devices.slice(0, 3).map(d => {
+                const isOnline = (new Date() - new Date(d.lastSeen)) < 300000;
+                let statusClass = 'offline';
+                let statusText = 'Offline';
+                
+                if (d.emergencyMode) {
+                    statusClass = 'emergency';
+                    statusText = 'EMERGENCY';
+                } else if (d.fallDetected) {
+                    statusClass = 'fall';
+                    statusText = 'FALL DETECTED';
+                } else if (isOnline) {
+                    statusClass = 'online';
+                    statusText = 'Online';
+                }
+                
+                const timeAgo = getTimeAgo(new Date(d.lastSeen));
+                const heartRate = d.lastHealthReading?.heartRate || '--';
+                const spo2 = d.lastHealthReading?.spo2 || '--';
+                
+                return `
+                    <div class="device-card p-2 ${d.emergencyMode ? 'border-red-500 bg-red-50' : d.fallDetected ? 'border-orange-500 bg-orange-50' : ''}">
+                        <div class="flex justify-between items-center">
+                            <span class="font-semibold text-sm">${d.patientName || 'Unknown Patient'}</span>
+                            <span class="location-marker ${statusClass}" title="${statusText}"></span>
+                        </div>
+                        <div class="flex text-xs mt-1">
+                            <span class="mr-3 ${(heartRate !== '--' && heartRate > 100) ? 'health-critical font-bold' : ''}">
+                                <i class="fas fa-heartbeat text-red-500 mr-1"></i>${heartRate}
+                            </span>
+                            <span class="${(spo2 !== '--' && spo2 < 95) ? 'health-warning font-bold' : ''}">
+                                <i class="fas fa-lungs text-blue-500 mr-1"></i>${spo2}%
+                            </span>
+                            <span class="ml-auto text-gray-500">
+                                <i class="fas fa-battery-${(d.battery || 0) > 60 ? 'full' : (d.battery || 0) > 20 ? 'half' : 'empty'}"></i>
+                                ${d.battery || '--'}%
+                            </span>
+                        </div>
+                        <div class="flex justify-between text-gray-500 text-2xs mt-1">
+                            <span><i class="fas fa-map-marker-alt mr-1"></i>${d.location ? 'Location available' : 'No GPS'}</span>
+                            <span>${timeAgo}</span>
+                        </div>
+                        ${d.emergencyMode ? 
+                            '<div class="mt-1 text-xs bg-red-600 text-white p-1 rounded text-center animate-pulse">🚨 EMERGENCY MODE ACTIVE</div>' : 
+                            d.fallDetected ?
+                            '<div class="mt-1 text-xs bg-orange-500 text-white p-1 rounded text-center animate-pulse">⚠️ FALL DETECTED</div>' :
+                            ''}
+                    </div>
+                `;
+            }).join('');
+            
+            updateHealthReadings(devices);
+        }
+
+        function showNoDevices() {
+            const container = document.getElementById('activeDevicesList');
+            const noDevicesMsg = document.getElementById('noDevicesMessage');
+            const deviceBadge = document.getElementById('deviceCountBadge');
+            const healthSection = document.getElementById('healthReadingsSection');
+            
+            container.classList.add('hidden');
+            noDevicesMsg.style.display = 'block';
+            deviceBadge.style.display = 'none';
+            healthSection.style.display = 'none';
+            
+            hideEmergencyBanner();
+            hideFallBanner();
+            
+            document.getElementById('activeDevices').textContent = '0';
+            document.getElementById('activeDevicesCount').textContent = '0';
+            document.getElementById('esp32Status').innerHTML = '<i class="fas fa-microchip mr-1"></i>ESP32';
+            document.getElementById('fallDevicesCount').textContent = '0';
+            document.getElementById('fallAlertsCount').textContent = '0';
+        }
+
+        function updateHealthReadings(devices) {
+            const container = document.getElementById('healthReadings');
+            
+            container.innerHTML = devices.slice(0, 5).map(d => {
+                const heartRate = d.lastHealthReading?.heartRate || '--';
+                const spo2 = d.lastHealthReading?.spo2 || '--';
+                
+                return `
+                    <div class="flex justify-between text-xs border-b border-gray-100 py-1">
+                        <span class="font-medium">${d.patientName || 'Unknown'}</span>
+                        <span>
+                            <span class="${(heartRate !== '--' && heartRate > 100) ? 'text-red-600 font-bold' : ''}">
+                                ${heartRate} bpm
+                            </span>
+                            <span class="mx-1">|</span>
+                            <span class="${(spo2 !== '--' && spo2 < 95) ? 'text-yellow-600 font-bold' : ''}">
+                                ${spo2}%
+                            </span>
+                        </span>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function simulateEmergency() {
+            document.getElementById('fingerprintModal').classList.remove('flex');
+            document.getElementById('fingerprintModal').classList.add('hidden');
+            
+            const emergency = {
+                id: 'EMG-' + Math.random().toString(36).substr(2, 6).toUpperCase(),
+                patient: 'Demo Patient',
+                timestamp: new Date().toISOString()
+            };
+            
+            emergencyAlerts.push(emergency);
+            showNotification('🚨 EMERGENCY ALERT SENT!', 'error');
+            
+            showEmergencyBanner();
+            document.getElementById('emergencyCount').textContent = emergencyAlerts.length;
+            
+            // Simulate a fall detection as well
+            setTimeout(() => {
+                showNotification('⚠️ FALL DETECTED - Demo', 'warning');
+                showFallBanner();
+                document.getElementById('fallCount').textContent = '1';
+                document.getElementById('fallAlertsCount').textContent = '1';
+                document.getElementById('fallDevicesCount').textContent = '1';
+            }, 2000);
+        }
+
+        // ==================== LIVE UPDATES ====================
+        function startLiveUpdates() {
+            fetchLiveQueue();
+            fetchESP32Devices();
+            
+            refreshInterval = setInterval(fetchLiveQueue, 10000);
+            devicesRefreshInterval = setInterval(fetchESP32Devices, 15000);
+        }
+
+        function debounce(func, wait) {
+            let timeout;
+            return function executedFunction(...args) {
+                const later = () => {
+                    clearTimeout(timeout);
+                    func(...args);
+                };
+                clearTimeout(timeout);
+                timeout = setTimeout(later, wait);
+            };
+        }
+
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', initializeApp);
+    </script>
+</body>
+</html>

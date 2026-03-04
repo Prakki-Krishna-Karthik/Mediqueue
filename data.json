@@ -1,0 +1,328 @@
+{
+  "queue": [
+    {
+      "token": "S-1-001",
+      "patientName": "karthik",
+      "mobileNumber": "4327215472",
+      "hospitalId": 1,
+      "hospitalName": "Apollo Hospitals - Greams Road",
+      "hospitalCoordinates": {
+        "lat": 13.0827,
+        "lng": 80.2707
+      },
+      "doctorId": 1,
+      "doctorName": "Dr. Devi Shetty",
+      "appointmentType": "severity",
+      "isSeverity": true,
+      "symptoms": "Fever",
+      "appointmentDate": "2026-03-04T00:00:00.000Z",
+      "appointmentTime": "07:22 pm",
+      "status": "Completed",
+      "priority": 1,
+      "slotNumber": 1,
+      "slotType": "priority",
+      "estimatedStartTime": "2026-03-02T13:52:30.478Z",
+      "estimatedStartTimeFormatted": "07:22 pm",
+      "estimatedMinutes": 0,
+      "severityScore": 0.75,
+      "severityCategory": "urgent",
+      "aiConfidence": 0.061224489795918366,
+      "aiMethod": "ai-nlp",
+      "patientLocation": {
+        "lat": 12.84242133197832,
+        "lng": 80.15681091327913
+      },
+      "travelInfo": {
+        "minutes": 45,
+        "distance": 29.4,
+        "isPeakHour": true,
+        "speed": 40
+      },
+      "createdAt": "2026-03-02T13:52:30.478Z",
+      "completedAt": "2026-03-02T14:25:21.323Z"
+    },
+    {
+      "token": "S-8-001",
+      "patientName": "Krishna",
+      "mobileNumber": "4327215472",
+      "hospitalId": 8,
+      "hospitalName": "Chettinad Health City",
+      "hospitalCoordinates": {
+        "lat": 13.0827,
+        "lng": 80.2707
+      },
+      "doctorId": 28,
+      "doctorName": "Dr. P. S. Rajan",
+      "appointmentType": "severity",
+      "isSeverity": true,
+      "symptoms": "Fever",
+      "appointmentDate": "2026-03-05T00:00:00.000Z",
+      "appointmentTime": "02:55 pm",
+      "status": "Waiting",
+      "priority": 1,
+      "slotNumber": 1,
+      "slotType": "priority",
+      "estimatedStartTime": "2026-03-03T09:25:08.811Z",
+      "estimatedStartTimeFormatted": "02:55 pm",
+      "estimatedMinutes": 0,
+      "severityScore": 0.75,
+      "severityCategory": "urgent",
+      "aiConfidence": 0.061224489795918366,
+      "aiMethod": "ai-nlp",
+      "patientLocation": {
+        "lat": 12.842597256505575,
+        "lng": 80.15682830297398
+      },
+      "travelInfo": {
+        "minutes": 45,
+        "distance": 29.4,
+        "isPeakHour": false,
+        "speed": 40
+      },
+      "createdAt": "2026-03-03T09:25:08.812Z"
+    }
+  ],
+  "tokenCounter": 5,
+  "lastResetDate": "Sun Sep 21 2025",
+  "dailyTokens": {
+    "2025-09-21": 7,
+    "2025-09-22": 4,
+    "Sun Sep 21 2025": 0,
+    "2025-09-25": 1,
+    "2025-09-26": 1,
+    "2025-09-27": 1,
+    "2025-09-25-3-normal": 1,
+    "2025-09-25-1-severity": 1,
+    "2025-09-25-2-normal": 1,
+    "2025-09-25-2-severity": 1,
+    "2025-09-25-2": 2,
+    "2025-09-25-3": 1,
+    "2025-09-26-3": 1,
+    "2025-09-26-2": 2,
+    "2025-10-15-3": 1,
+    "2025-10-18-1": 1,
+    "2026-02-24-1": 4,
+    "2026-02-24-3": 1,
+    "2026-02-24-2": 3,
+    "2026-02-24-4": 1,
+    "2026-02-25-2": 1,
+    "2026-02-25-1": 3,
+    "2026-02-25-3": 1,
+    "2026-02-25-6": 3,
+    "2026-02-25-8": 2,
+    "2026-02-24-8": 1,
+    "2026-02-25-5": 1,
+    "2026-02-25-7": 3,
+    "2026-03-04-1": 1,
+    "2026-03-05-8": 1
+  },
+  "lastResetCheck": "Sun Sep 21 2025",
+  "slotAllocations": {
+    "4-2025-09-25": {
+      "prioritySlots": [
+        null,
+        null
+      ],
+      "normalSlots": [
+        null,
+        null,
+        null,
+        null,
+        null
+      ],
+      "nextSlotNumber": 1
+    },
+    "2-2025-09-25": {
+      "prioritySlots": [
+        null,
+        null
+      ],
+      "normalSlots": [
+        null,
+        null,
+        null,
+        null,
+        null
+      ],
+      "nextSlotNumber": 1
+    },
+    "3-2025-09-25": {
+      "prioritySlots": [
+        null,
+        null
+      ],
+      "normalSlots": [
+        null,
+        null,
+        null,
+        null,
+        null
+      ],
+      "nextSlotNumber": 1
+    },
+    "1-2025-09-25": {
+      "prioritySlots": [
+        null,
+        null
+      ],
+      "normalSlots": [
+        null,
+        null,
+        null,
+        null,
+        null
+      ],
+      "nextSlotNumber": 1
+    },
+    "3-2025-09-26": {
+      "prioritySlots": [
+        null,
+        null
+      ],
+      "normalSlots": [
+        null,
+        null,
+        null,
+        null,
+        null
+      ],
+      "nextSlotNumber": 1
+    },
+    "2-2025-09-26": {
+      "prioritySlots": [
+        null,
+        null
+      ],
+      "normalSlots": [
+        null,
+        null,
+        null,
+        null,
+        null
+      ],
+      "nextSlotNumber": 1
+    },
+    "3-2025-10-15": {
+      "prioritySlots": [
+        null,
+        null
+      ],
+      "normalSlots": [
+        null,
+        null,
+        null,
+        null,
+        null
+      ],
+      "nextSlotNumber": 1
+    },
+    "1-2025-10-18": {
+      "prioritySlots": [
+        null,
+        null
+      ],
+      "normalSlots": [
+        null,
+        null,
+        null,
+        null,
+        null
+      ],
+      "nextSlotNumber": 1
+    },
+    "1-2026-02-24": {
+      "prioritySlots": [
+        null,
+        null
+      ],
+      "normalSlots": [
+        null,
+        null,
+        null,
+        null,
+        null
+      ],
+      "nextSlotNumber": 1
+    },
+    "3-2026-02-24": {
+      "prioritySlots": [
+        null,
+        null
+      ],
+      "normalSlots": [
+        null,
+        null,
+        null,
+        null,
+        null
+      ],
+      "nextSlotNumber": 1
+    },
+    "2-2026-02-24": {
+      "prioritySlots": [
+        null,
+        null
+      ],
+      "normalSlots": [
+        null,
+        null,
+        null,
+        null,
+        null
+      ],
+      "nextSlotNumber": 1
+    },
+    "4-2026-02-24": {
+      "prioritySlots": [
+        null,
+        null
+      ],
+      "normalSlots": [
+        null,
+        null,
+        null,
+        null,
+        null
+      ],
+      "nextSlotNumber": 1
+    },
+    "2-2026-02-25": {
+      "prioritySlots": [
+        null,
+        null
+      ],
+      "normalSlots": [
+        null,
+        null,
+        null,
+        null,
+        null
+      ],
+      "nextSlotNumber": 1,
+      "startTime": "2026-02-24T17:14:53.388Z",
+      "estimatedTimes": {}
+    }
+  },
+  "activePatients": [
+    {
+      "patientToken": "S-8-001",
+      "deviceId": "DEV-226A3957",
+      "registeredAt": "2026-02-25T17:17:32.447Z"
+    },
+    {
+      "patientToken": "S-7-002",
+      "deviceId": "DEV-05C47004",
+      "registeredAt": "2026-02-25T19:07:17.136Z"
+    },
+    {
+      "patientToken": "S-1-002",
+      "deviceId": "DEV-709C8F91",
+      "registeredAt": "2026-02-25T19:15:07.973Z"
+    },
+    {
+      "patientToken": "S-1-001",
+      "deviceId": "DEV-7A01B4F7",
+      "registeredAt": "2026-03-02T13:53:14.843Z"
+    }
+  ]
+}

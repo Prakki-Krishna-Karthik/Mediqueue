@@ -1,0 +1,62 @@
+{
+  "prescriptions": [],
+  "quantumKeys": [],
+  "securityLogs": [
+    {
+      "type": "KEY_GENERATION",
+      "message": "Quantum keys generated for patient test-patient-001",
+      "keyId": "QK-873EBE7E2E739712",
+      "algorithm": "RSA-QUANTUM-HYBRID",
+      "timestamp": "2025-09-26T05:16:36.846Z",
+      "id": "c8426cc5"
+    },
+    {
+      "type": "KEY_GENERATION",
+      "message": "Quantum keys generated for patient patient-john-001",
+      "keyId": "QK-29D1AAC41072506B",
+      "algorithm": "RSA-QUANTUM-HYBRID",
+      "timestamp": "2025-09-26T05:18:49.895Z",
+      "id": "b12ee422"
+    },
+    {
+      "type": "KEY_GENERATION",
+      "message": "Quantum keys generated for patient patient-alice-001",
+      "keyId": "QK-C989297DF13A133A",
+      "algorithm": "RSA-QUANTUM-HYBRID",
+      "timestamp": "2025-09-26T05:19:46.698Z",
+      "id": "62dd1f2a"
+    },
+    {
+      "type": "KEY_GENERATION",
+      "message": "Quantum keys generated for patient patient-bob-002",
+      "keyId": "QK-2A3235DD73973EC5",
+      "algorithm": "RSA-QUANTUM-HYBRID",
+      "timestamp": "2025-09-26T05:19:47.886Z",
+      "id": "b5cc3a3d"
+    },
+    {
+      "type": "KEY_GENERATION",
+      "message": "Quantum keys generated for patient patient-carol-003",
+      "keyId": "QK-59D96F9EEB55DA51",
+      "algorithm": "RSA-QUANTUM-HYBRID",
+      "timestamp": "2025-09-26T05:19:49.164Z",
+      "id": "e396e857"
+    },
+    {
+      "type": "KEY_GENERATION",
+      "message": "Quantum keys generated for patient patient-001",
+      "keyId": "QK-BE0182CD20F27FB2",
+      "algorithm": "RSA-QUANTUM-HYBRID",
+      "timestamp": "2025-09-30T05:54:39.830Z",
+      "id": "005c7b49"
+    },
+    {
+      "type": "KEY_GENERATION",
+      "message": "Quantum keys generated for doctor doctor-001",
+      "keyId": "QK-5F5393C2B4E48804",
+      "algorithm": "RSA-QUANTUM-HYBRID",
+      "timestamp": "2025-09-30T05:54:40.083Z",
+      "id": "d873640a"
+    }
+  ]
+}

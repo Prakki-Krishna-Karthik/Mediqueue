@@ -1,0 +1,124 @@
+[
+  {
+    "id": 1,
+    "name": "Apollo Hospitals - Greams Road",
+    "locality": "Greams Road",
+    "address": "21, Greams Lane, Off Greams Road, Chennai - 600006",
+    "specialties": [
+      "Cardiology",
+      "Neurology",
+      "Orthopedics",
+      "Oncology"
+    ],
+    "doctors": 6,
+    "contact": "+91-44-2829-3333",
+    "normalSlots": 50,
+    "severitySlots": 10
+  },
+  {
+    "id": 2,
+    "name": "MIOT International",
+    "locality": "Manapakkam",
+    "address": "4/112, Mount Poonamallee Road, Manapakkam, Chennai - 600089",
+    "specialties": [
+      "Orthopedics",
+      "Trauma Care",
+      "Cardiology",
+      "Neurology"
+    ],
+    "doctors": 4,
+    "contact": "+91-44-4200-2288",
+    "normalSlots": 45,
+    "severitySlots": 9
+  },
+  {
+    "id": 3,
+    "name": "Fortis Malar Hospital",
+    "locality": "Adyar",
+    "address": "52, 1st Main Road, Gandhi Nagar, Adyar, Chennai - 600020",
+    "specialties": [
+      "Cardiology",
+      "Gastroenterology",
+      "Nephrology"
+    ],
+    "doctors": 3,
+    "contact": "+91-44-4289-2222",
+    "normalSlots": 40,
+    "severitySlots": 8
+  },
+  {
+    "id": 4,
+    "name": "Kauvery Hospital",
+    "locality": "Alwarpet",
+    "address": "81, Dr Radhakrishnan Salai, Alwarpet, Chennai - 600004",
+    "specialties": [
+      "Cardiology",
+      "Pulmonology",
+      "Critical Care"
+    ],
+    "doctors": 3,
+    "contact": "+91-44-4000-6000",
+    "normalSlots": 35,
+    "severitySlots": 7
+  },
+  {
+    "id": 5,
+    "name": "Billroth Hospitals",
+    "locality": "Shenoy Nagar",
+    "address": "52, West Mada Church Street, Shenoy Nagar, Chennai - 600030",
+    "specialties": [
+      "General Medicine",
+      "Cardiology",
+      "Diabetology"
+    ],
+    "doctors": 3,
+    "contact": "+91-44-2615-5555",
+    "normalSlots": 38,
+    "severitySlots": 8
+  },
+  {
+    "id": 6,
+    "name": "SRM Institutes for Medical Science",
+    "locality": "Vadapalani",
+    "address": "No.1, Jawaharlal Nehru Road, Vadapalani, Chennai - 600026",
+    "specialties": [
+      "Multi-Specialty",
+      "Cardiology",
+      "Neurology"
+    ],
+    "doctors": 4,
+    "contact": "+91-44-4220-2222",
+    "normalSlots": 42,
+    "severitySlots": 8
+  },
+  {
+    "id": 7,
+    "name": "Global Health City",
+    "locality": "Perumbakkam",
+    "address": "439, Cheran Nagar, Perumbakkam, Chennai - 600100",
+    "specialties": [
+      "Cardiology",
+      "Transplant",
+      "Oncology"
+    ],
+    "doctors": 4,
+    "contact": "+91-44-4477-7000",
+    "normalSlots": 44,
+    "severitySlots": 9
+  },
+  {
+    "id": 8,
+    "name": "Chettinad Health City",
+    "locality": "Kelambakkam",
+    "address": "Rajiv Gandhi Salai, Kelambakkam, Chennai - 603103",
+    "specialties": [
+      "Cardiology",
+      "Orthopedics",
+      "Neurology"
+    ],
+    "doctors": 3,
+    "contact": "+91-44-4741-1000",
+    "normalSlots": 36,
+    "severitySlots": 7
+  }
+]
